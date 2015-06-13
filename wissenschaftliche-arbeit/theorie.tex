@@ -38,6 +38,15 @@ Sie werden durch einen Pfeil gekennzeichnet und Stellen folgende Beziehungen da:
         edge [pre] node[anchor=south] {produziert}(prodStart);
     \end{tikzpicture}
 \end{center}
+Dabei sind folgende Relation unzulässig:
+\begin{center}
+    \begin{tikzpicture}
+        \node[transition](konsStart){};
+        \node[transition, right=3cm of konsStart](konsEnd){};
+        \node[place, below= of konsStart](prodStart){};
+        \node[place, right=3cm of prodStart](prodEnd){};
+    \end{tikzpicture}
+\end{center}
 
 %TODO @Tobias: Kann man das so sagen?
 \paragraph{Schnittstellen} ermöglichen auf Aktivitäten aus der Umgebung einzugehen.
@@ -55,6 +64,7 @@ Kalte Transitionen werden durch eine Transition dargestellt, die ein $\epsilon$ 
     \end{tikzpicture}
 \end{center}
 
+\paragraph{Zähler}
 
 \subsection{Variationen}
 %TODO
