@@ -42,9 +42,11 @@ Dabei sind folgende Relation unzulässig:
 \begin{center}
     \begin{tikzpicture}
         \node[transition](konsStart){};
-        \node[transition, right=3cm of konsStart](konsEnd){};
+        \node[transition, right=3cm of konsStart](konsEnd){}
+        edge [pre] (konsStart);
         \node[place, below= of konsStart](prodStart){};
-        \node[place, right=3cm of prodStart](prodEnd){};
+        \node[place, right=3cm of prodStart](prodEnd){}
+        edge [pre] (prodStart);
     \end{tikzpicture}
 \end{center}
 
@@ -64,7 +66,25 @@ Kalte Transitionen werden durch eine Transition dargestellt, die ein $\epsilon$ 
     \end{tikzpicture}
 \end{center}
 
-\paragraph{Zähler}
+\paragraph{Zähler} erleichtern insbesondere die Modellierung von Lagern.
+Können z.B. in einem Lager maximal 10 Stücke eines Materials gespeichert werden.
+Um dies anschaulich zu modellieren wird der Transaktion ein Parameter $x$ übergeben.
+Dabei wird die Transition als Funktion aufgefasst und mit Rückgabewert $x - 1$.
+\begin{center}
+    \begin{tikzpicture}
+        \node(left){};
+        \node[right=3cm of left](right){};
+        \node[transition, right=1cm of left, left=1cm of right](transition){$x>0$}
+        edge[pre, dashed] (left)
+        edge[post, dashed] (right);
+        \node[place, below= of transition] {10}
+        edge[pre, anchor=east, transform canvas={xshift=-1mm}] node {$x$} (transition)
+        edge[post, anchor=west, transform canvas={xshift=1mm}] node {$x-1$} (transition);
+
+    \end{tikzpicture}
+\end{center}
+Somit lässt sich verhindern, dass die Transition mehr als 10 mal ausgeführt wird.
+
 
 \subsection{Variationen}
 %TODO
