@@ -1,19 +1,19 @@
 \section{Theorie}
 %TODO @Tobias bitte überprüfe nochmal Begrifflichkeiten
 Im Prinzip können Petri-Netze als Graphen aufgefasst werden.
-Diese Graphen besitzen allerdings besondere Knoten, die meist als Komponenten bezeichnet werden.
+Diese Graphen besitzen allerdings besondere Knoten, die als Komponenten bezeichnet werden.
 Im folgenden sollen die Komponenten eines Petri-Netzes beschrieben werden.
 
-\paragraph{Transitionen} sind eine Komponenten eines Petri-Netzes.
+\paragraph{Transitionen} sind Komponenten eines Petri-Netzes.
 Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten \footnote{\label{hu_berlin}\url{https://www2.informatik.hu-berlin.de/top/lehre/WS05-06/se_systementwurf/Petrinetze-1.pdf}[Stand: Juni 2015]} kann.
-Eine Transition durch eines Quadrat dargestellt:
+Eine Transition wird durch ein Quadrat dargestellt:
 \begin{center}
     \begin{tikzpicture}
         \node[transition]{};
     \end{tikzpicture}
 \end{center}
 
-\paragraph{Plätze} sind Komponenten eines Petri-Netzes an den Objekte, wie z.B. Werkzeuge, Materialien, Produkte oder auch Rezepte gelagert werden können.
+\paragraph{Plätze} sind Komponenten eines Petri-Netzes an denen Objekte, wie z.B. Werkzeuge, Materialien, Produkte oder auch Rezepte gelagert werden können.
 Sie werden zum lagern, speichern, sichtbar machen oder Zustände repräsentieren \footref{hu_berlin} verwendet.
 Ein Platz wird durch einen Kreis dargestellt:
 \begin{center}
@@ -36,6 +36,22 @@ Sie werden durch einen Pfeil gekennzeichnet und Stellen folgende Beziehungen da:
         \node[transition, below= of konsStart](prodStart){};
         \node[place, tokens=1, right=3cm of prodStart](prodEnd){}
         edge [pre] node[anchor=south] {produziert}(prodStart);
+    \end{tikzpicture}
+\end{center}
+
+%TODO @Tobias: Kann man das so sagen?
+\paragraph{Schnittstellen} ermöglichen auf Aktivitäten aus der Umgebung einzugehen.
+Mit Hilfe der bisherig vorgestellten Bestandteile lassen sich bereits geschlossene Systeme modellieren.
+Sollen allerdings Interaktionen eines Geschäftsprozesses mit z.B. einem Kunden modelliert werden, benötigt man Schnittstellen.
+Diese werden durch eine Transition dargestellt.
+
+\paragraph{Kalte Transitionen} dienen der Modellierung von Transitionen, bei denen nicht klar ist ob sie eintreffen.
+Wird z.B. ein Prozess von einem Kunden durch dessen Bezahlung ausgelöst, ist im Vorhinein nicht klar ob dieses Ereignis jemals eintreffen wird.
+Ist das Gegenteil der Fall wird die Transition als \enquote{warm} bezeichnet.
+Kalte Transitionen werden durch eine Transition dargestellt, die ein $\epsilon$ beinhalten dargestellt.
+\begin{center}
+    \begin{tikzpicture}
+        \node[transition]{$\epsilon$};
     \end{tikzpicture}
 \end{center}
 
