@@ -4,8 +4,8 @@ Im Prinzip können Petri-Netze als Graphen aufgefasst werden.
 Diese Graphen besitzen allerdings besondere Knoten, die meist als Komponenten bezeichnet werden.
 Im folgenden sollen die Komponenten eines Petri-Netzes beschrieben werden.
 
-\paragraph{Eine Transition} ist eine Komponente eines Petri-Netzes.
-Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten kann.
+\paragraph{Transitionen} sind eine Komponenten eines Petri-Netzes.
+Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten \footnote{\label{hu_berlin}\url{https://www2.informatik.hu-berlin.de/top/lehre/WS05-06/se_systementwurf/Petrinetze-1.pdf}[Stand: Juni 2015]} kann.
 Eine Transition durch eines Quadrat dargestellt:
 \begin{center}
     \begin{tikzpicture}
@@ -13,8 +13,8 @@ Eine Transition durch eines Quadrat dargestellt:
     \end{tikzpicture}
 \end{center}
 
-\paragraph{Plätze} sind Komponenten an den Objekte, wie z.B. Werkzeuge, Materialien, Produkte oder auch Rezepte gelagert werden können.
-Sie werden immer hauptsächlich zum lagern, speichern, sichtbar machen, Zustände repräsentieren verwendet.
+\paragraph{Plätze} sind Komponenten eines Petri-Netzes an den Objekte, wie z.B. Werkzeuge, Materialien, Produkte oder auch Rezepte gelagert werden können.
+Sie werden zum lagern, speichern, sichtbar machen oder Zustände repräsentieren \footref{hu_berlin} verwendet.
 Ein Platz wird durch einen Kreis dargestellt:
 \begin{center}
     \begin{tikzpicture}
@@ -25,6 +25,19 @@ Ein Platz wird durch einen Kreis dargestellt:
     \end{tikzpicture}
 \end{center}
 
+\paragraph{Kanten} sind selbst keine Komponenten, sondern stellen Beziehungen zwischen Komponenten her.
+Sie bilden logische Zusammenhänge, Zugriffsrechte und eine Kausale Ordnung \footref{hu_berlin}.
+Sie werden durch einen Pfeil gekennzeichnet und Stellen folgende Beziehungen da:
+\begin{center}
+    \begin{tikzpicture}
+        \node[place, tokens=1](konsStart){};
+        \node[transition, right=3cm of konsStart](konsEnd){}
+        edge [pre] node[anchor=south] {konsumiert}(konsStart);
+        \node[transition, below= of konsStart](prodStart){};
+        \node[place, tokens=1, right=3cm of prodStart](prodEnd){}
+        edge [pre] node[anchor=south] {produziert}(prodStart);
+    \end{tikzpicture}
+\end{center}
 
 
 \subsection{Variationen}
