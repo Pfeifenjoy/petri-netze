@@ -4,7 +4,7 @@ Im Prinzip können Petri-Netze als Graphen aufgefasst werden.
 Diese Graphen besitzen allerdings besondere Knoten, die meist als Komponenten bezeichnet werden.
 Im folgenden sollen die Komponenten eines Petri-Netzes beschrieben werden.
 
-\paragraph{Eine Transaktion} ist eine Komponente eines Petri-Netzes.
+\paragraph{Eine Transition} ist eine Komponente eines Petri-Netzes.
 Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten kann.
 Eine Transition durch eines Quadrat dargestellt:
 \begin{center}
@@ -18,9 +18,13 @@ Sie werden immer hauptsächlich zum lagern, speichern, sichtbar machen, Zuständ
 Ein Platz wird durch einen Kreis dargestellt:
 \begin{center}
     \begin{tikzpicture}
-        \node[place]{};
+        \node[place](emptyPlace){};
+        \node[below=0.2cm of emptyPlace](emptyPlaceLabel){Leerer Platz};
+        \node[right= of emptyPlaceLabel](filledPlaceLabel){Gefüllter Platz};
+        \node[place, tokens=1, above=0.2cm of filledPlaceLabel](filledPlace){};
     \end{tikzpicture}
 \end{center}
+
 
 
 \subsection{Variationen}
