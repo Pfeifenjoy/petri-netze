@@ -37,13 +37,15 @@
 		\label{fig:transition}
 	\end{figure}
 
-	Transitionen können zusätzlich noch mit formeln beschriftet werden. Zur Bedeutung dieser Formeln kommen wir später.
+	Transitionen können zusätzlich noch mit einer Formel beschriftet werden. Diese ist eine Vorbedingung, die erfüllt sein muss, damit die Transition aktiviert werden kann. Wann genau eine Transition aktiviert ist und was das bedeutet, wird später in Kapitel~\ref{ssub:ablaufregeln} noch diskutiert.
 
 	\paragraph{Kanten} sind selbst keine Komponenten, sondern stellen Beziehungen zwischen Komponenten her. Kanten werden durch einen Pfeil gekennzeichnet und verbinden immer eine Transition mit einem Platz oder einen Platz mit einer Transition. Niemals jedoch verbinden sie zwei Plätze oder zwei Transitionen.
 
 	Kanten, die von einer Transition auf eine Stelle zeigen, drücken aus, dass diese Transition Objekte erzeugt und sie in der Stelle ablegt. Kanten, die von einer Stelle auf eine Transition zeigen, drücken aus, dass diese Transition Objekte aus der Stelle entnimmt.
 
-	\begin{figure}[h]
+	Eine Kante kann zusätzlich noch mit einem Term beschriftet werden. Das Ergebnis dieses Terms müssen Marken sein. Damit wird angegeben, wie viele und welche Marken die Transition aus der Stelle entnimmt beziehungsweise in ihr erzeugt. Im Normalfall ist die Beschriftung einfach ein konstanter Term, es sind jedoch auch Terme mit beliebigen Variablen erlaubt. 
+
+	\begin{figure}[ht]
 		\centering
 		\begin{tikzpicture}
 			\node[place, tokens=1](konsStart){};
@@ -61,9 +63,9 @@
 \subsection{Ablaufregeln}
 \label{ssub:ablaufregeln}
 	Der allgemeine Aufbau von Petrinetzen ist nun bekannt. Nach welchen Regeln sich ein Petrinetz genau verhält, wurde jedoch noch nicht festgelegt. In den folgenden Abschnitten sollen diese Regeln erläutert werden.
-
-	\paragraph{Als Markierung} eines Petrinetzes bezeichnet man die Verteilung von Marken auf die Plätze. In Abbildung~\ref{fig:markierungen} sind zwei verschiedene Markierungen eines Petrinetzes dargestellt.
-	\begin{figure}[ht]
+	\\\\
+	Als \textbf{Markierung} eines Petrinetzes bezeichnet man die Verteilung von Marken auf die Plätze. In Abbildung~\ref{fig:markierung1}~und~\ref{fig:markierung2} sind zwei unterschiedliche Markierungen eines Petrinetzes dargestellt.
+	\begin{figure}[t]
 		\centering
 		\begin{tikzpicture}
 			\node[transition,label=left:Produkt herstellen](t){};
@@ -76,7 +78,11 @@
 						edge[pre]	node[token,left=2pt]{}	(M)
 						edge[post]	node[draw, below=1pt]{}	(P);
 		\end{tikzpicture}
-
+		\caption{Markierung 1 eines Petrinetzes}
+		\label{fig:markierung1}
+	\end{figure}
+	\begin{figure}[t]
+		\centering
 		\begin{tikzpicture}
 			\node[transition,label=left:Produkt herstellen](t){};
 
@@ -90,9 +96,12 @@
 						edge[pre]	node[token,left=2pt]{}	(M)
 						edge[post]	node[draw, below=1pt]{}	(P);
 		\end{tikzpicture}
-		\caption{Beispiel für zwei verschiedene Markierungen eines Petrinetzes}
-		\label{fig:markierungen}
+		\caption{Markierung 2 eines Petrinetzes}
+		\label{fig:markierung2}
 	\end{figure}
+	\\\\
+	In einer bestimmten Markierung heißt eine Transition $t$ \textbf{aktiviert}, wenn alle Plätze, aus denen $t$ Marken entnimmt, genug Marken beinhalten. Außerdem muss, wenn $t$ mit einer Formel beschriftet ist, diese gültig sein.
+	
 
 
 
