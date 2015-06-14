@@ -1,91 +1,98 @@
 %!TEX root = petri-netze.tex
 \section{Theorie}
-%TODO @Tobias bitte überprüfe nochmal Begrifflichkeiten
-Im Prinzip können Petri-Netze als Graphen aufgefasst werden.
-Diese Graphen besitzen allerdings besondere Knoten, die als Komponenten bezeichnet werden.
-Im folgenden sollen die Komponenten eines Petri-Netzes beschrieben werden.
 
+%TODO Hier fehlt noch ein einführender Text zwischen der Über- und der Unterüberschrift
 
-\paragraph{Plätze} sind die passiven Komponenten eines Petri-Netzes. Sie dienen repräsentieren Zustände oder lagern Objekte.
-Ein Platz wird durch einen Kreis dargestellt:
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}
-		\node[place](emptyPlace){};
-		\node[below=0.2cm of emptyPlace](emptyPlaceLabel){Leerer Platz};
-		\node[right= of emptyPlaceLabel](filledPlaceLabel){Gefüllter Platz};
-		\node[place, tokens=1, above=0.2cm of filledPlaceLabel](filledPlace){};
-	\end{tikzpicture}
-	\caption{Beispiel für einen leeren Platz und einen Platz mit einer (abstrakten) Marke.}
-	\label{fig:platz}
-\end{figure}
+\subsection{Aufbau von Petrinetzen} % (fold)
+\label{sub:aufbau_von_petrinetzen}
+	Im Prinzip können Petri-Netze als Graphen aufgefasst werden.
+	Diese Graphen besitzen allerdings besondere Knoten, die als Komponenten bezeichnet werden.
+	Im folgenden werden die Komponenten eines Petri-Netzes beschrieben.
 
-Die Objekte, die von Plätzen gelagert werden, werden allgemein als \textbf{Marken} bezeichnet. Grundsätzlich kann ein Platz beliebig viele Marken enthalten. Eine Marke kann ein konkretes Objekt aus der realen Welt repräsentieren (Maschinen, Werkstücke, Menschen, ...). Es können jedoch auch abstrakte Marken verwendet werden, die dann meist als schwarzer Punkt dargestellt werden, wie in Abbildung~\ref{fig:platz} zu sehen. Abstrakte Marken sind sehr nützlich, um Zustände, in dem sich das modellierte System befinden kann, zu modellieren.
+	\paragraph{Plätze} sind die passiven Komponenten eines Petri-Netzes. Sie dienen repräsentieren Zustände oder lagern Objekte.
+	Ein Platz wird durch einen Kreis dargestellt:
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\node[place](emptyPlace){};
+			\node[below=0.2cm of emptyPlace](emptyPlaceLabel){Leerer Platz};
+			\node[right= of emptyPlaceLabel](filledPlaceLabel){Gefüllter Platz};
+			\node[place, tokens=1, above=0.2cm of filledPlaceLabel](filledPlace){};
+		\end{tikzpicture}
+		\caption{Beispiel für einen leeren Platz und einen Platz mit einer (abstrakten) Marke.}
+		\label{fig:platz}
+	\end{figure}
 
-\paragraph{Transitionen} sind die aktiven Komponenten eines Petri-Netzes.
-Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten \footnote{\label{hu_berlin}\url{https://www2.informatik.hu-berlin.de/top/lehre/WS05-06/se_systementwurf/Petrinetze-1.pdf}[Stand: Juni 2015]}.
-Eine Transition wird durch ein Quadrat dargestellt:
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}
-		\node[transition]{};
-	\end{tikzpicture}
-	\caption{Beispiel für eine Transition}
-	\label{fig:transition}
-\end{figure}
+	Die Objekte, die von Plätzen gelagert werden, werden allgemein als \textbf{Marken} bezeichnet. Grundsätzlich kann ein Platz beliebig viele Marken enthalten. Eine Marke kann ein konkretes Objekt aus der realen Welt repräsentieren (Maschinen, Werkstücke, Menschen, ...). Es können jedoch auch abstrakte Marken verwendet werden, die dann meist als schwarzer Punkt dargestellt werden, wie in Abbildung~\ref{fig:platz} zu sehen. Abstrakte Marken sind sehr nützlich, um Zustände, in dem sich das modellierte System befinden kann, zu modellieren.
 
-Transitionen können zusätzlich noch mit formeln beschriftet werden. Zur Bedeutung dieser Formeln kommen wir später.
+	\paragraph{Transitionen} sind die aktiven Komponenten eines Petri-Netzes.
+	Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten \footnote{\label{hu_berlin}\url{https://www2.informatik.hu-berlin.de/top/lehre/WS05-06/se_systementwurf/Petrinetze-1.pdf}[Stand: Juni 2015]}.
+	Eine Transition wird durch ein Quadrat dargestellt:
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\node[transition]{};
+		\end{tikzpicture}
+		\caption{Beispiel für eine Transition}
+		\label{fig:transition}
+	\end{figure}
 
-\paragraph{Kanten} sind selbst keine Komponenten, sondern stellen Beziehungen zwischen Komponenten her. Kanten werden durch einen Pfeil gekennzeichnet und verbinden immer eine Transition mit einem Platz oder einen Platz mit einer Transition. Niemals jedoch verbinden sie zwei Plätze oder zwei Transitionen.
+	Transitionen können zusätzlich noch mit formeln beschriftet werden. Zur Bedeutung dieser Formeln kommen wir später.
 
-Kanten, die von einer Transition auf eine Stelle zeigen, drücken aus, dass diese Transition Objekte erzeugt und sie in der Stelle ablegt. Kanten, die von einer Stelle auf eine Transition zeigen, drücken aus, dass diese Transition Objekte aus der Stelle entnimmt.
+	\paragraph{Kanten} sind selbst keine Komponenten, sondern stellen Beziehungen zwischen Komponenten her. Kanten werden durch einen Pfeil gekennzeichnet und verbinden immer eine Transition mit einem Platz oder einen Platz mit einer Transition. Niemals jedoch verbinden sie zwei Plätze oder zwei Transitionen.
 
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}
-		\node[place, tokens=1](konsStart){};
-		\node[transition, right=3cm of konsStart](konsEnd){}
-			edge[pre] node[token,below=1pt,label=above:konsumiert]{} (konsStart);
-		
-		\node[transition, below= of konsStart](prodStart){};
-		\node[place, tokens=1, right=3cm of prodStart](prodEnd){}
-			edge [pre] node[token,below=1pt,label=above:produziert]{} (prodStart);
-	\end{tikzpicture}
-	\caption{Beispiele für Kanten}
-	\label{fig:kanten}
-\end{figure}
+	Kanten, die von einer Transition auf eine Stelle zeigen, drücken aus, dass diese Transition Objekte erzeugt und sie in der Stelle ablegt. Kanten, die von einer Stelle auf eine Transition zeigen, drücken aus, dass diese Transition Objekte aus der Stelle entnimmt.
 
-\paragraph{Als Markierung} eines Petrinetzes bezeichnet man die Verteilung von Marken auf die Plätze. In Abbildung~\ref{fig:markierungen} sind zwei verschiedene Markierungen eines Petrinetzes dargestellt.
-\begin{figure}[ht]
-	\centering
-	\begin{tikzpicture}
-		\node[transition,label=left:Produkt herstellen](t){};
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\node[place, tokens=1](konsStart){};
+			\node[transition, right=3cm of konsStart](konsEnd){}
+				edge[pre] node[token,below=1pt,label=above:konsumiert]{} (konsStart);
+			
+			\node[transition, below= of konsStart](prodStart){};
+			\node[place, tokens=1, right=3cm of prodStart](prodEnd){}
+				edge [pre] node[token,below=1pt,label=above:produziert]{} (prodStart);
+		\end{tikzpicture}
+		\caption{Beispiele für Kanten}
+		\label{fig:kanten}
+	\end{figure}
 
-		\node[place, below left=of t, label=below:Auftrag liegt vor, tokens=1](A){};
-		\node[place, above left=of t, label=Lagerbestand, tokens=2](M){};
-		\node[place, right=of t, label=Endprodukt](P){};
+\subsection{Ablaufregeln}
+\label{ssub:ablaufregeln}
+	Der allgemeine Aufbau von Petrinetzen ist nun bekannt. Nach welchen Regeln sich ein Petrinetz genau verhält, wurde jedoch noch nicht festgelegt. In den folgenden Abschnitten sollen diese Regeln erläutert werden.
 
-		\draw (t)	edge[pre]	node[token,left=2pt]{}	(A)
-					edge[pre]	node[token,left=2pt]{}	(M)
-					edge[post]	node[draw, below=1pt]{}	(P);
-	\end{tikzpicture}
+	\paragraph{Als Markierung} eines Petrinetzes bezeichnet man die Verteilung von Marken auf die Plätze. In Abbildung~\ref{fig:markierungen} sind zwei verschiedene Markierungen eines Petrinetzes dargestellt.
+	\begin{figure}[ht]
+		\centering
+		\begin{tikzpicture}
+			\node[transition,label=left:Produkt herstellen](t){};
 
-	\begin{tikzpicture}
-		\node[transition,label=left:Produkt herstellen](t){};
+			\node[place, below left=of t, label=below:Auftrag liegt vor, tokens=1](A){};
+			\node[place, above left=of t, label=Lagerbestand, tokens=2](M){};
+			\node[place, right=of t, label=Endprodukt](P){};
 
-		\node[place, below left=of t, label=below:Auftrag liegt vor](A){};
-		\node[place, above left=of t, label=Lagerbestand, tokens=1](M){};
-		\node[place, right=of t, label=Endprodukt](P){}
-			[children are tokens]
-			child{node[draw]{}};
+			\draw (t)	edge[pre]	node[token,left=2pt]{}	(A)
+						edge[pre]	node[token,left=2pt]{}	(M)
+						edge[post]	node[draw, below=1pt]{}	(P);
+		\end{tikzpicture}
 
-		\draw (t)	edge[pre]	node[token,left=2pt]{}	(A)
-					edge[pre]	node[token,left=2pt]{}	(M)
-					edge[post]	node[draw, below=1pt]{}	(P);
-	\end{tikzpicture}
-	\caption{Beispiel für zwei verschiedene Markierungen eines Petrinetzes}
-	\label{fig:markierungen}
-\end{figure}
+		\begin{tikzpicture}
+			\node[transition,label=left:Produkt herstellen](t){};
+
+			\node[place, below left=of t, label=below:Auftrag liegt vor](A){};
+			\node[place, above left=of t, label=Lagerbestand, tokens=1](M){};
+			\node[place, right=of t, label=Endprodukt](P){}
+				[children are tokens]
+				child{node[draw]{}};
+
+			\draw (t)	edge[pre]	node[token,left=2pt]{}	(A)
+						edge[pre]	node[token,left=2pt]{}	(M)
+						edge[post]	node[draw, below=1pt]{}	(P);
+		\end{tikzpicture}
+		\caption{Beispiel für zwei verschiedene Markierungen eines Petrinetzes}
+		\label{fig:markierungen}
+	\end{figure}
 
 
 
