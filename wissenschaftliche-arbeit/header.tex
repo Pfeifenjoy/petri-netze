@@ -1,3 +1,4 @@
+%!TEX root = petri-netze.tex
 \usepackage[utf8]{inputenc}
 \usepackage[german]{babel}
 \usepackage{amssymb}
@@ -12,6 +13,15 @@
 \usepackage{scrextend}
 \usepackage{tikz}
 \usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri,positioning}
+\tikzset{
+	place/.append style={
+	},
+	transition/.append style={
+	},
+	swap/.append style={
+		left=2pt
+	}
+}
 
 \usepackage{setspace}
 \usepackage{cite}
