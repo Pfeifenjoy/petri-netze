@@ -13,6 +13,17 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri,positioning}
 
+\usepackage{xifthen}
+\usepackage{fancyvrb}
+
+\newcommand\modulo[2]{\@tempcnta=#1
+        \divide\@tempcnta by #2
+        \multiply\@tempcnta by #2
+        \multiply\@tempcnta by -1
+        \advance\@tempcnta by #1\relax
+        \the\@tempcnta}
+\usepackage{rotating}
+\usepackage{lscape}
 \usepackage{setspace}
 \usepackage{cite}
 
