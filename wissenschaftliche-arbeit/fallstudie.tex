@@ -6,25 +6,25 @@ Anemometer \footnote{Ein Gerät zum messen der Windstärke} modelliert werden, w
     \centering
 \begin{tikzpicture}
     \node[place, label=above:Holzlager](holzlager) {$50*$\textbullet};
-    \node[transition, left= of holzlager](holzNachkaufen) {Holz nachkaufen};
+    \node[transition, left= of holzlager, label=left:Holz nachkaufen](holzNachkaufen) {};
     \node[place, below= of holzNachkaufen, label=left:Verbrauchtes Holz](verbrauchtesHolz){};
-    \node[transition, below=8em of holzlager](fluegelHerstellen) {Flügel herstellen};
+    \node[transition, below=8em of holzlager, label=left:Flügel herstellen](fluegelHerstellen) {};
     \node[place, label=left:Flügel, below= of fluegelHerstellen](fluegel) {};
-    \node[place, right= of fluegelHerstellen](1){};
+    \node[place, right=7em of fluegelHerstellen](1){};
     \node[place, above=1em of 1, label=above:CNC Modus \enquote{Flügel}](cncModus){};
     \node[place, above= of cncModus, label=above:Herzustellende Flügel](herzustellendeFluegel) {};
-    \node[transition,below  right=5em of 1](cncModusUmschalten){CNC Modus umschalten};
-    \node[place, above= of cncModusUmschalten, label=below:CNC Modus Grundplatte](cncModusGrundplatte){};
-    \node[transition, above right= of cncModusUmschalten](grundplatteBauen) {Grundplatte bauen};
+    \node[transition,below  right=5em of 1, label=below:CNC Modus umschalten](cncModusUmschalten){};
+    \node[place, above= of cncModusUmschalten, label={[label distance=0.1em]-30:CNC Modus Grundplatte}](cncModusGrundplatte){};
+    \node[transition, right=12em of cncModusGrundplatte, label=right:Grundplatte bauen](grundplatteBauen) {};
     \node[place, above=7em of grundplatteBauen, label=right:HerzustellendeGrundplatte](herzustellendeGrundplatte){};
-    \node[transition, above= of cncModusGrundplatte](auftragBearbeiten){Auftrag bearbeiten};
+    \node[transition, above=7em of cncModusGrundplatte, label=below:Auftrag bearbeiten](auftragBearbeiten){};
     \node[place, above=10em of auftragBearbeiten, label=right:Eingehende Aufträge](eingehendeAuftraege){};
     \node[place, below right=7em of fluegel, label=above:Standbein Lager](standbeinLager){$10*$\textbullet};
-    \node[transition, below=5em of standbeinLager](zusammensetzen){Zusammensetzen};
+    \node[transition, below=5em of standbeinLager, label=left:Zusammensetzen](zusammensetzen){};
     \node[place, below= of zusammensetzen, label=right:Fertige Windräder](fertigeWindraeder){};
-    \node[transition, right= of standbeinLager](standbeineNachkaufen){Standbeine Nachkaufen};
+    \node[transition, right= of standbeinLager, label=right:Standbeine Nachkaufen](standbeineNachkaufen){};
     \node[place, below= of standbeineNachkaufen, label=right:Verbrauchte Standbeine](verbrauchteStandbeine){};
-    \node[place, right=8em of standbeineNachkaufen, label=right:Grundplatten](grundplatten){};
+    \node[place, right=14em of standbeineNachkaufen, label=right:Grundplatten](grundplatten){};
     
     \path
     (holzNachkaufen) edge[post, anchor=south] node[]{$40*$\textbullet} (holzlager)
