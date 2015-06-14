@@ -2,7 +2,59 @@
 Im Folgenden soll eine Produktionsanlage eines Baukastens für einen
 Anemometer \footnote{Ein Gerät zum messen der Windstärke} modelliert werden, welches im Rahmen eines Projektes \footnote{\url{http://mett.ddns.net} [Stand: Juni]}  der Gruppe Woodchucks an der DHBW Mannheim entwickelt wurde.
 \subsection{Modellierung}
-%TODO
+\begin{sidewaystable}
+    \centering
+\begin{tikzpicture}
+    \node[place, label=above:Holzlager](holzlager) {$50*$\textbullet};
+    \node[transition, left= of holzlager](holzNachkaufen) {Holz nachkaufen};
+    \node[place, below= of holzNachkaufen, label=left:Verbrauchtes Holz](verbrauchtesHolz){};
+    \node[transition, below=8em of holzlager](fluegelHerstellen) {Flügel herstellen};
+    \node[place, label=left:Flügel, below= of fluegelHerstellen](fluegel) {};
+    \node[place, right= of fluegelHerstellen](1){};
+    \node[place, above=1em of 1, label=above:CNC Modus \enquote{Flügel}](cncModus){};
+    \node[place, above= of cncModus, label=above:Herzustellende Flügel](herzustellendeFluegel) {};
+    \node[transition,below  right=5em of 1](cncModusUmschalten){CNC Modus umschalten};
+    \node[place, above= of cncModusUmschalten, label=below:CNC Modus Grundplatte](cncModusGrundplatte){};
+    \node[transition, above right= of cncModusUmschalten](grundplatteBauen) {Grundplatte bauen};
+    \node[place, above=7em of grundplatteBauen, label=right:HerzustellendeGrundplatte](herzustellendeGrundplatte){};
+    \node[transition, above= of cncModusGrundplatte](auftragBearbeiten){Auftrag bearbeiten};
+    \node[place, above=10em of auftragBearbeiten, label=right:Eingehende Aufträge](eingehendeAuftraege){};
+    \node[place, below right=7em of fluegel, label=above:Standbein Lager](standbeinLager){$10*$\textbullet};
+    \node[transition, below=5em of standbeinLager](zusammensetzen){Zusammensetzen};
+    \node[place, below= of zusammensetzen, label=right:Fertige Windräder](fertigeWindraeder){};
+    \node[transition, right= of standbeinLager](standbeineNachkaufen){Standbeine Nachkaufen};
+    \node[place, below= of standbeineNachkaufen, label=right:Verbrauchte Standbeine](verbrauchteStandbeine){};
+    \node[place, right=8em of standbeineNachkaufen, label=right:Grundplatten](grundplatten){};
+    
+    \path
+    (holzNachkaufen) edge[post, anchor=south] node[]{$40*$\textbullet} (holzlager)
+    (holzNachkaufen) edge[pre, anchor=east] node{$40*$\textbullet} (verbrauchtesHolz)
+    (holzlager) edge[post, anchor=east] node{\textbullet} (fluegelHerstellen)
+    (fluegelHerstellen) edge[post, anchor=north] node{\textbullet} (verbrauchtesHolz)
+    (fluegelHerstellen) edge[post] (fluegel)
+    (fluegel) edge[post, anchor=east] node {\textbullet\textbullet\textbullet\textbullet} (zusammensetzen)
+    (standbeinLager) edge[post, anchor=east] node{\textbullet} (zusammensetzen)
+    (zusammensetzen) edge[post, anchor=east] node{\textbullet} (fertigeWindraeder)
+    (zusammensetzen) edge[post, anchor=east] node{\textbullet} (verbrauchteStandbeine)
+    (verbrauchteStandbeine) edge[post, anchor=west] node{$8*$\textbullet} (standbeineNachkaufen)
+    (standbeineNachkaufen) edge[post] (standbeinLager)
+    (zusammensetzen) edge[pre, anchor=north, out=-20,in=-90] node{\textbullet} (grundplatten)
+    (grundplatteBauen) edge[post] (grundplatten)
+    (herzustellendeGrundplatte) edge[post] (grundplatteBauen)
+    (fluegelHerstellen) edge[post] (1)
+    (fluegelHerstellen) edge[pre] (cncModus)
+    (herzustellendeFluegel) edge[pre, bend right] (fluegelHerstellen)
+    (herzustellendeFluegel) edge[pre, anchor=south] node{\textbullet\textbullet\textbullet\textbullet} (auftragBearbeiten)
+    (holzlager) edge[post, in=90, out=30] (grundplatteBauen)
+    (cncModus) edge[pre] (grundplatteBauen)
+    (1) edge[post, anchor=east, bend right] node{\textbullet\textbullet\textbullet\textbullet} (cncModusUmschalten)
+    (cncModusUmschalten) edge[post] (cncModusGrundplatte)
+    (cncModusGrundplatte) edge[post] (grundplatteBauen)
+    (auftragBearbeiten) edge[post] (herzustellendeGrundplatte)
+    (eingehendeAuftraege) edge[post] (auftragBearbeiten);
+\end{tikzpicture}
+    \caption{Modell der Anemometer Produktion}\label{Modell}
+\end{sidewaystable}
 
 \subsection{Verifikation}
 %TODO
