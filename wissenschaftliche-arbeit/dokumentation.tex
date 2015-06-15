@@ -1,0 +1,91 @@
+%%**************************************************************
+%% Vorlage fuer Bachelorarbeiten (o.ä.) der DHBW
+%%
+%% Autor: Tobias Dreher, Yves Fischer
+%% Datum: 06.07.2011
+%%
+%% Autor: Michael Gruben
+%% Datum: 15.05.2013
+%%
+%% Autor: Markus Barthel
+%% Datum: 22.08.2014
+%%**************************************************************
+
+\input{ads/header}
+
+\makeglossaries
+\input{ads/glossary}
+
+\begin{document}
+
+	% Deckblatt
+	\begin{spacing}{1}
+		\input{ads/deckblatt}
+	\end{spacing}
+	\newpage
+
+	\renewcommand{\thepage}{\Roman{page}}
+	\setcounter{page}{1}
+
+	% Sperrvermerk
+	%\input{ads/sperrvermerk}
+	%\newpage
+
+	% Erklärung
+	\input{ads/erklaerung}
+	\newpage
+
+	% Abstract
+	\input{ads/abstract}
+	\newpage
+
+	\pagestyle{plain}
+
+	% Inhaltsverzeichnis
+	\begin{spacing}{1.1}
+		\setcounter{tocdepth}{1}
+		%für die Anzeige von Unterkapiteln im Inhaltsverzeichnis
+		%\setcounter{tocdepth}{2}
+		\tableofcontents
+	\end{spacing}
+	\newpage
+
+	\renewcommand{\thepage}{\arabic{page}}
+	\setcounter{page}{1}
+
+	% Inhalt
+    \input{content/einleitung}
+    \input{content/theorie}
+    \input{content/fallstudie}
+    \input{content/modell_beschreibung}
+    \input{content/fazit}
+
+	% Anhang
+	\clearpage
+	\pagenumbering{roman}
+
+	% Abbildungsverzeichnis
+	\cleardoublepage
+	\listoffigures
+
+	%Tabellenverzeichnis
+	\cleardoublepage
+	\listoftables
+
+	% Quellcodeverzeichnis
+	\cleardoublepage
+	\lstlistoflistings
+
+	% Literaturverzeichnis
+	\cleardoublepage
+	\printbibliography
+
+	% Abkürzungsverzeichnis
+	\cleardoublepage
+	\phantomsection \label{listofacs}
+	\addcontentsline{toc}{chapter}{\langabkverz}
+	\input{ads/acronyms}
+
+	% Glossar
+	\printglossary[style=altlist,title=\langglossar]
+\end{document}

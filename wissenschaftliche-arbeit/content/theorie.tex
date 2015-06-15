@@ -1,5 +1,5 @@
 %!TEX root = petri-netze.tex
-\section{Theorie}
+\chapter{Theorie}
 
 %TODO Hier fehlt noch ein einführender Text zwischen der Über- und der Unterüberschrift
 
@@ -43,7 +43,7 @@
 
 	Kanten, die von einer Transition auf eine Stelle zeigen, drücken aus, dass diese Transition Objekte erzeugt und sie in der Stelle ablegt. Kanten, die von einer Stelle auf eine Transition zeigen, drücken aus, dass diese Transition Objekte aus der Stelle entnimmt.
 
-	Eine Kante kann zusätzlich noch mit einem Term beschriftet werden. Das Ergebnis dieses Terms müssen Marken sein. Damit wird angegeben, wie viele und welche Marken die Transition aus der Stelle entnimmt beziehungsweise in ihr erzeugt. Im Normalfall ist die Beschriftung einfach ein konstanter Term, es sind jedoch auch Terme mit beliebigen Variablen erlaubt. 
+	Eine Kante kann zusätzlich noch mit einem Term beschriftet werden. Das Ergebnis dieses Terms müssen Marken sein. Damit wird angegeben, wie viele und welche Marken die Transition aus der Stelle entnimmt beziehungsweise in ihr erzeugt. Im Normalfall ist die Beschriftung einfach ein konstanter Term, es sind jedoch auch Terme mit beliebigen Variablen erlaubt.
 
 	\begin{figure}[ht]
 		\centering
@@ -51,7 +51,7 @@
 			\node[place, tokens=1](konsStart){};
 			\node[transition, right=3cm of konsStart](konsEnd){}
 				edge[pre] node[token,below=1pt,label=above:konsumiert]{} (konsStart);
-			
+
 			\node[transition, below= of konsStart](prodStart){};
 			\node[place, tokens=1, right=3cm of prodStart](prodEnd){}
 				edge [pre] node[token,below=1pt,label=above:produziert]{} (prodStart);
@@ -206,6 +206,12 @@ Somit lässt sich verhindern, dass die Transition mehr als 10 mal ausgeführt wi
 
 
 \subsection{Variationen}
+Mit den zunehmenden Anforderungen an Petri-Netze sind zahlreiche Variationen von Petri-Netzen entstanden.
+Prominente Vertreter sind dabei:
+\begin{itemize}
+    \item Elementare Petri-Netze
+    \item Colored Petri-Netze
+\end{itemize}
 %TODO
 
 \subsection{Algorithmen}

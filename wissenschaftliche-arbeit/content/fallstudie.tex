@@ -1,7 +1,7 @@
-\section{Fallstudie}
+\chapter{Fallstudie}
 Im Folgenden soll eine Produktionsanlage eines Baukastens für einen
 Anemometer \footnote{Ein Gerät zum messen der Windstärke} modelliert werden, welches im Rahmen eines Projektes \footnote{\url{http://mett.ddns.net} [Stand: Juni]}  der Gruppe Woodchucks an der DHBW Mannheim entwickelt wurde.
-\subsection{Modellierung}
+\section{Modellierung}
 \begin{sidewaystable}
     \centering
 \begin{tikzpicture}
@@ -25,7 +25,7 @@ Anemometer \footnote{Ein Gerät zum messen der Windstärke} modelliert werden, w
     \node[transition, right= of standbeinLager, label=right:Standbeine Nachkaufen](standbeineNachkaufen){};
     \node[place, below= of standbeineNachkaufen, label=right:Verbrauchte Standbeine](verbrauchteStandbeine){};
     \node[place, right=14em of standbeineNachkaufen, label=right:Grundplatten](grundplatten){};
-    
+
     \path
     (holzNachkaufen) edge[post, anchor=south] node[]{$40*$\textbullet} (holzlager)
     (holzNachkaufen) edge[pre, anchor=east] node{$40*$\textbullet} (verbrauchtesHolz)
@@ -56,8 +56,8 @@ Anemometer \footnote{Ein Gerät zum messen der Windstärke} modelliert werden, w
     \caption{Modell der Anemometer Produktion}\label{Modell}
 \end{sidewaystable}
 
-\subsection{Verifikation}
+\section{Verifikation}
 %TODO
 
-\subsection{Analyse}
+\section{Analyse}
 %TODO
