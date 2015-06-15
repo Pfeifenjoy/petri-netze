@@ -1,0 +1,8 @@
+\section{Modell Beschreibung}
+Der Kreislauf beginnt mit der Eingabe eines neuen Auftrages. Dieser ermöglicht die Asuführung der Tansition ("`Auftrag bearbeiten"'). 
+Somit wird die ausführung der neuen Transition "`Grundplatte bauen"' ermöglicht. \\ Diese beginnt nun mit dem Bau der Grundplatte. Hieraus werden zwei neue Transitionen angesteuert, sobald eine Einheit produziert worden ist. \\ Bevor die Transition "`Flügel herstellen"' ausgeführt werden kann, wird der CNC-Modus der Fräse geändert.  Nun wird begonnen die Flügel herzustellen. Sobald vier Einheiten produziert worden sind, wird der CNC-Modus umgestellt, um mit der Fräse eine neue Grundplatte erzeugen zu können. \\ Sobald nun die Flügel hergestellt sind und eine Menge von mindestens 40 Einheiten Holz verbraucht worden sind, so wird eine neue Transition "`Holz kaufen"' ausgeführt, welche nach deren Ablauf das Lager mit dem neuem Holz nachfüllt. Nach der Produktion von 4 Einheiten der Flügel beginnt nun die Transition "`Zusammensetzen"'. Bei dieser Aktion werden nun die einzelnen Komponenten: \begin{itemize}
+	\itemsep0pt
+	\item Standbeine
+	\item Flügel
+	\item Grundplatte
+\end{itemize} zusammengesetzt und für die weitere Verarbeitng, als neue Einheit zur Verfügung gestellt. \\ Sollten nun bei dieser Transition mindestens 8 Standbeine verbraucht worden sein, so wird eine neue für den Einkauf und EInlagerung von Standbeinen in Kraft gesetzt.
