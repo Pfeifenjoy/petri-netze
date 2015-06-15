@@ -23,7 +23,7 @@
 		\label{fig:platz}
 	\end{figure}
 
-	Die Objekte, die von Plätzen gelagert werden, werden allgemein als \textbf{Marken} bezeichnet. Grundsätzlich kann ein Platz beliebig viele Marken enthalten. Eine Marke kann ein konkretes Objekt aus der realen Welt repräsentieren (Maschinen, Werkstücke, Menschen, ...). Es können jedoch auch abstrakte Marken verwendet werden, die dann meist als schwarzer Punkt dargestellt werden, wie in Abbildung~\ref{fig:platz} zu sehen. Abstrakte Marken sind sehr nützlich, um Zustände, in dem sich das modellierte System befinden kann, zu modellieren.
+	Die Objekte, die von Plätzen gelagert werden, werden allgemein als \textbf{Marken} bezeichnet. Grundsätzlich kann ein Platz beliebig viele Marken enthalten. Außerdem können in einem Modell unterschiedliche Typen von Marken verwendet werden. Eine Marke kann ein konkretes Objekt aus der realen Welt repräsentieren (Maschinen, Werkstücke, Menschen, ...). Es können jedoch auch abstrakte Marken verwendet werden, die dann meist als schwarzer Punkt dargestellt werden, wie in Abbildung~\ref{fig:platz} zu sehen. Abstrakte Marken sind sehr nützlich, um Zustände, in dem sich das System befinden kann, zu modellieren.
 
 	\paragraph{Transitionen} sind die aktiven Komponenten eines Petri-Netzes.
 	Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten \footnote{\label{hu_berlin}\url{https://www2.informatik.hu-berlin.de/top/lehre/WS05-06/se_systementwurf/Petrinetze-1.pdf}[Stand: Juni 2015]}.
@@ -70,12 +70,16 @@
 		\begin{tikzpicture}
 			\node[transition,label=left:Produkt herstellen](t){};
 
-			\node[place, below left=of t, label=below:Auftrag liegt vor, tokens=1](A){};
-			\node[place, above left=of t, label=Lagerbestand, tokens=2](M){};
+			\node[place, below left=of t, label=below:Auftrag liegt vor, tokens=2](A){};
+			\node[place, above left=of t, label=Lagerbestand](M){}
+				[children are tokens]
+				child{node[draw,regular polygon,regular polygon sides=3,inner sep=1pt]{}}
+				child{node[draw,diamond,inner sep=1.4pt]{}}
+				child{node[draw,diamond,inner sep=1.4pt]{}};
 			\node[place, right=of t, label=Endprodukt](P){};
 
 			\draw (t)	edge[pre]	node[token,left=2pt]{}	(A)
-						edge[pre]	node[token,left=2pt]{}	(M)
+						edge[pre]	node[draw,regular polygon,regular polygon sides=3,inner sep=1pt,left=3pt]{}	(M)
 						edge[post]	node[draw, below=1pt]{}	(P);
 		\end{tikzpicture}
 		\caption{Markierung 1 eines Petrinetzes}
@@ -86,22 +90,32 @@
 		\begin{tikzpicture}
 			\node[transition,label=left:Produkt herstellen](t){};
 
-			\node[place, below left=of t, label=below:Auftrag liegt vor](A){};
-			\node[place, above left=of t, label=Lagerbestand, tokens=1](M){};
+			\node[place, below left=of t, label=below:Auftrag liegt vor,tokens=1](A){};
+			\node[place, above left=of t, label=Lagerbestand](M){}
+				[children are tokens]
+				child{node[draw,diamond,inner sep=1.4pt]{}}
+				child{node[draw,diamond,inner sep=1.4pt]{}};
+
 			\node[place, right=of t, label=Endprodukt](P){}
 				[children are tokens]
 				child{node[draw]{}};
 
 			\draw (t)	edge[pre]	node[token,left=2pt]{}	(A)
-						edge[pre]	node[token,left=2pt]{}	(M)
+						edge[pre]	node[draw,regular polygon,regular polygon sides=3,inner sep=1pt,left=3pt]{}	(M)
 						edge[post]	node[draw, below=1pt]{}	(P);
 		\end{tikzpicture}
 		\caption{Markierung 2 eines Petrinetzes}
 		\label{fig:markierung2}
 	\end{figure}
 	\\\\
-	In einer bestimmten Markierung heißt eine Transition $t$ \textbf{aktiviert}, wenn alle Plätze, aus denen $t$ Marken entnimmt, genug Marken beinhalten. Außerdem muss, wenn $t$ mit einer Formel beschriftet ist, diese gültig sein.
-	
+	Als nächstes wird erklärt, wann man eine Transition als \textbf{aktiviert} bezeichnet. Anschaulich gesehen ist eine Transition $t$ in einer bestimmten Markierung aktiviert, wenn alle Plätze, aus denen $t$ Marken entnimmt, dafür genug Marken beinhalten.
+	Formal muss also jeder Platz, von dem eine Kante auf $t$ zeigt, von jedem Markentyp genausoviele oder mehr Marken beinhalten als in der Beschriftung der Kante angegeben.
+
+	Im Petrinetz aus Abbildung~\ref{fig:markierung1} entnimmt die Transition $Produkt herstellen$ eine dreieckige Markierung aus der Stelle $Lagerbestand$ und eine schwarze Markierung aus $Auftrag liegt vor$. Beide Stellen enthalten die geforderten Marken. Also ist die Transition aktiviert.
+
+	In Abbildung~\ref{fig:markierung2} ist das selbe Petrinetz in einer anderen Markierung dargestellt. Hier enthält $Auftrag liegt vor$ noch genug schwarze Marken. Aus dem Platz $Lagerbestand$ entnimmt die Transition eine dreieckige Marke, aber in dem Platz sind nur Rautenfürmige Marken enthalten. Daher ist die Transition in Markierung 2 nicht aktiviert.
+
+	Diese Vorgehensweise funktioniert für Kanten, die mit konstanten Termen beschriftet sind. Wenn im Term einer Kante Variablen vorkommen, muss zunächst eine Belegung der Variablen mit echten Werten gefunden werden, für die diese Bedingung zutrifft. Wenn eine passende Variablenbelegung existiert, dann ist die Transition in der entsprechenden Markierung unter dieser Variablenbelegung aktiviert. Andernflls ist die Transition nicht aktiviert.
 
 
 
@@ -152,7 +166,9 @@
 
 
 
-%TODO @Tobias: Kann man das so sagen?
+
+
+% @:    so sagen?
 \paragraph{Schnittstellen} ermöglichen auf Aktivitäten aus der Umgebung einzugehen.
 Mit Hilfe der bisherig vorgestellten Bestandteile lassen sich bereits geschlossene Systeme modellieren.
 Sollen allerdings Interaktionen eines Geschäftsprozesses mit z.B. einem Kunden modelliert werden, benötigt man Schnittstellen.
