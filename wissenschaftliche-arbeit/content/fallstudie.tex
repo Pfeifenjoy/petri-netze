@@ -1,7 +1,16 @@
-\section{Fallstudie}
+%!TEX root = ../dokumentation.tex
+\chapter{Fallstudie}
 Im Folgenden soll eine Produktionsanlage eines Baukastens für einen
 Anemometer \footnote{Ein Gerät zum messen der Windstärke} modelliert werden, welches im Rahmen eines Projektes \footnote{\url{http://mett.ddns.net} [Stand: Juni]}  der Gruppe Woodchucks an der DHBW Mannheim entwickelt wurde.
-\subsection{Modellierung}
+\section{Modellierung}
+%Modell Beschreibung
+Der Kreislauf beginnt mit der Eingabe eines neuen Auftrages. Dieser ermöglicht die Asuführung der Tansition ("`Auftrag bearbeiten"').
+Somit wird die ausführung der neuen Transition "`Grundplatte bauen"' ermöglicht. \\ Diese beginnt nun mit dem Bau der Grundplatte. Hieraus werden zwei neue Transitionen angesteuert, sobald eine Einheit produziert worden ist. \\ Bevor die Transition "`Flügel herstellen"' ausgeführt werden kann, wird der CNC-Modus der Fräse geändert.  Nun wird begonnen die Flügel herzustellen. Sobald vier Einheiten produziert worden sind, wird der CNC-Modus umgestellt, um mit der Fräse eine neue Grundplatte erzeugen zu können. \\ Sobald nun die Flügel hergestellt sind und eine Menge von mindestens 40 Einheiten Holz verbraucht worden sind, so wird eine neue Transition "`Holz kaufen"' ausgeführt, welche nach deren Ablauf das Lager mit dem neuem Holz nachfüllt. Nach der Produktion von 4 Einheiten der Flügel beginnt nun die Transition "`Zusammensetzen"'. Bei dieser Aktion werden nun die einzelnen Komponenten: \begin{itemize}
+	\itemsep0pt
+	\item Standbeine
+	\item Flügel
+	\item Grundplatte
+\end{itemize} zusammengesetzt und für die weitere Verarbeitng, als neue Einheit zur Verfügung gestellt. \\ Sollten nun bei dieser Transition mindestens 8 Standbeine verbraucht worden sein, so wird eine neue für den Einkauf und EInlagerung von Standbeinen in Kraft gesetzt.
 \begin{sidewaystable}
     \centering
 \begin{tikzpicture}
@@ -12,20 +21,20 @@ Anemometer \footnote{Ein Gerät zum messen der Windstärke} modelliert werden, w
     \node[place, label=left:Flügel, below= of fluegelHerstellen](fluegel) {};
     \node[place, right=7em of fluegelHerstellen](1){};
     \node[place, above=1em of 1, label=above:CNC Modus \enquote{Flügel}](cncModus){};
-    \node[place, above= of cncModus, label=above:Herzustellende Flügel](herzustellendeFluegel) {};
+    \node[place, above=6em of cncModus, label=above:Herzustellende Flügel](herzustellendeFluegel) {};
     \node[transition,below  right=5em of 1, label=below:CNC Modus umschalten](cncModusUmschalten){};
     \node[place, above= of cncModusUmschalten, label={[label distance=0.1em]-30:CNC Modus Grundplatte}](cncModusGrundplatte){};
     \node[transition, right=12em of cncModusGrundplatte, label=right:Grundplatte bauen](grundplatteBauen) {};
-    \node[place, above=7em of grundplatteBauen, label=right:HerzustellendeGrundplatte](herzustellendeGrundplatte){};
-    \node[transition, above=7em of cncModusGrundplatte, label=below:Auftrag bearbeiten](auftragBearbeiten){};
-    \node[place, above=10em of auftragBearbeiten, label=right:Eingehende Aufträge](eingehendeAuftraege){};
+    \node[transition, above=10em of grundplatteBauen, label=below:Auftrag bearbeiten](auftragBearbeiten){};
+    \node[place, right=6em of auftragBearbeiten, label=right:HerzustellendeGrundplatte](herzustellendeGrundplatte){};
+    \node[place, above=2em of auftragBearbeiten, label=right:Eingehende Aufträge](eingehendeAuftraege){};
     \node[place, below right=7em of fluegel, label=above:Standbein Lager](standbeinLager){$10*$\textbullet};
     \node[transition, below=5em of standbeinLager, label=left:Zusammensetzen](zusammensetzen){};
     \node[place, below= of zusammensetzen, label=right:Fertige Windräder](fertigeWindraeder){};
     \node[transition, right= of standbeinLager, label=right:Standbeine Nachkaufen](standbeineNachkaufen){};
     \node[place, below= of standbeineNachkaufen, label=right:Verbrauchte Standbeine](verbrauchteStandbeine){};
     \node[place, right=14em of standbeineNachkaufen, label=right:Grundplatten](grundplatten){};
-    
+
     \path
     (holzNachkaufen) edge[post, anchor=south] node[]{$40*$\textbullet} (holzlager)
     (holzNachkaufen) edge[pre, anchor=east] node{$40*$\textbullet} (verbrauchtesHolz)
@@ -43,10 +52,11 @@ Anemometer \footnote{Ein Gerät zum messen der Windstärke} modelliert werden, w
     (herzustellendeGrundplatte) edge[post] (grundplatteBauen)
     (fluegelHerstellen) edge[post] (1)
     (fluegelHerstellen) edge[pre] (cncModus)
-    (herzustellendeFluegel) edge[pre, bend right] (fluegelHerstellen)
+    (herzustellendeFluegel) edge[pre, out=210, in=70] (fluegelHerstellen)
+    (grundplatteBauen) edge[post, out=150, in=20, anchor=south] node{\textbullet}(verbrauchtesHolz)
     (herzustellendeFluegel) edge[pre, anchor=south] node{\textbullet\textbullet\textbullet\textbullet} (auftragBearbeiten)
-    (holzlager) edge[post, in=90, out=30] (grundplatteBauen)
-    (cncModus) edge[pre] (grundplatteBauen)
+    (holzlager) edge[post, in=150, out=0] (grundplatteBauen)
+    (cncModus) edge[pre, anchor=south] node{\textbullet\textbullet\textbullet\textbullet} (grundplatteBauen)
     (1) edge[post, anchor=east, bend right] node{\textbullet\textbullet\textbullet\textbullet} (cncModusUmschalten)
     (cncModusUmschalten) edge[post] (cncModusGrundplatte)
     (cncModusGrundplatte) edge[post] (grundplatteBauen)
@@ -56,8 +66,9 @@ Anemometer \footnote{Ein Gerät zum messen der Windstärke} modelliert werden, w
     \caption{Modell der Anemometer Produktion}\label{Modell}
 \end{sidewaystable}
 
-\subsection{Verifikation}
+\section{Verifikation}
 %TODO
 
-\subsection{Analyse}
+\section{Analyse}
 %TODO
+
