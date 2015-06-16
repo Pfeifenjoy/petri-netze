@@ -1,4 +1,4 @@
-%!TEX root = petri-netze.tex
+%!TEX root = ../dokumentation.tex
 \chapter{Theorie}
 
 %TODO Hier fehlt noch ein einführender Text zwischen der Über- und der Unterüberschrift
@@ -115,8 +115,16 @@
 
 	In Abbildung~\ref{fig:markierung2} ist das selbe Petrinetz in einer anderen Markierung dargestellt. Hier enthält $Auftrag liegt vor$ noch genug schwarze Marken. Aus dem Platz $Lagerbestand$ entnimmt die Transition eine dreieckige Marke, aber in dem Platz sind nur Rautenfürmige Marken enthalten. Daher ist die Transition in Markierung 2 nicht aktiviert.
 
-	Diese Vorgehensweise funktioniert für Kanten, die mit konstanten Termen beschriftet sind. Wenn im Term einer Kante Variablen vorkommen, muss zunächst eine Belegung der Variablen mit echten Werten gefunden werden, für die diese Bedingung zutrifft. Wenn eine passende Variablenbelegung existiert, dann ist die Transition in der entsprechenden Markierung unter dieser Variablenbelegung aktiviert. Andernflls ist die Transition nicht aktiviert.
+	Diese Vorgehensweise funktioniert für Kanten, die mit konstanten Termen beschriftet sind. Wenn im Term einer Kante Variablen vorkommen, muss zunächst eine Belegung der Variablen mit echten Werten gefunden werden, für die diese Bedingung zutrifft. Außerdem muss die Formel in der Transition für die Variablenbelegung wahr sein. Wenn eine passende Variablenbelegung existiert, dann ist die Transition in der entsprechenden Markierung unter dieser Variablenbelegung aktiviert. Andernfalls ist die Transition nicht aktiviert.
 
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\node[transition](t){};
+		\end{tikzpicture}
+		\caption{Ein Petrinetz mit Variablen in den Kantenbeschriftungen}
+		\label{fig:figure1}
+	\end{figure}
 
 
 
