@@ -24,8 +24,8 @@ Somit wird die ausführung der neuen Transition "`Grundplatte bauen"' ermöglich
     \node[transition,below  right=5em of 1, label=below:CNC Modus umschalten](cncModusUmschalten){};
     \node[place, above= of cncModusUmschalten, label={[label distance=0.1em]-30:CNC Modus Grundplatte}](cncModusGrundplatte){};
     \node[transition, right=12em of cncModusGrundplatte, label=right:Grundplatte bauen](grundplatteBauen) {};
-    \node[transition, above=10em of grundplatteBauen, label=below:Auftrag bearbeiten](auftragBearbeiten){};
-    \node[place, right=6em of auftragBearbeiten, label=right:HerzustellendeGrundplatte](herzustellendeGrundplatte){};
+    \node[transition, above left=7em and 3em of grundplatteBauen, label=below:Auftrag bearbeiten](auftragBearbeiten){};
+    \node[place, right=6em of auftragBearbeiten, label=right:Herzustellende Grundplatte](herzustellendeGrundplatte){};
     \node[place, above=2em of auftragBearbeiten, label=right:Eingehende Aufträge](eingehendeAuftraege){};
     \node[place, below right=7em of fluegel, label=above:Standbein Lager](standbeinLager){$10*$\textbullet};
     \node[transition, below=5em of standbeinLager, label=left:Zusammensetzen](zusammensetzen){};
