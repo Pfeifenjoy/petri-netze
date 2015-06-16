@@ -10,7 +10,8 @@ Somit wird die ausführung der neuen Transition "`Grundplatte bauen"' ermöglich
 	\item Flügel
 	\item Grundplatte
 \end{itemize} zusammengesetzt und für die weitere Verarbeitng, als neue Einheit zur Verfügung gestellt. \\ Sollten nun bei dieser Transition mindestens 8 Standbeine verbraucht worden sein, so wird eine neue für den Einkauf und EInlagerung von Standbeinen in Kraft gesetzt.
-\begin{sidewaystable}
+\begin{landscape}
+\begin{figure}
     \centering
 \begin{tikzpicture}
     \node[place, label=above:Holzlager](holzlager) {$50*$\textbullet};
@@ -63,7 +64,8 @@ Somit wird die ausführung der neuen Transition "`Grundplatte bauen"' ermöglich
     (eingehendeAuftraege) edge[post, anchor=west] node{\textbullet}(auftragBearbeiten);
 \end{tikzpicture}
     \caption{Modell der Anemometer Produktion}\label{Modell}
-\end{sidewaystable}
+\end{figure}
+\end{landscape}
 
 \section{Verifikation}
 %TODO
