@@ -20,7 +20,7 @@ Somit wird die ausführung der neuen Transition "`Grundplatte bauen"' ermöglich
     \node[place, label=left:Flügel, below= of fluegelHerstellen](fluegel) {};
     \node[place, right=7em of fluegelHerstellen](1){};
     \node[place, above=1em of 1, label=above:CNC Modus \enquote{Flügel}](cncModus){};
-    \node[place, above=6em of cncModus, label=above:Herzustellende Flügel](herzustellendeFluegel) {};
+    \node[place, above right=6em and 3em of cncModus, label=above:Herzustellende Flügel](herzustellendeFluegel) {};
     \node[transition,below  right=5em of 1, label=below:CNC Modus umschalten](cncModusUmschalten){};
     \node[place, above= of cncModusUmschalten, label={[label distance=0.1em]-30:CNC Modus Grundplatte}](cncModusGrundplatte){};
     \node[transition, right=12em of cncModusGrundplatte, label=right:Grundplatte bauen](grundplatteBauen) {};
@@ -45,22 +45,22 @@ Somit wird die ausführung der neuen Transition "`Grundplatte bauen"' ermöglich
     (zusammensetzen) edge[post, anchor=east] node{\textbullet} (fertigeWindraeder)
     (zusammensetzen) edge[post, anchor=east] node{\textbullet} (verbrauchteStandbeine)
     (verbrauchteStandbeine) edge[post, anchor=west] node{$8*$\textbullet} (standbeineNachkaufen)
-    (standbeineNachkaufen) edge[post] (standbeinLager)
+    (standbeineNachkaufen) edge[post, anchor=north] node{\textbullet}(standbeinLager)
     (zusammensetzen) edge[pre, anchor=north, out=-20,in=-90] node{\textbullet} (grundplatten)
-    (grundplatteBauen) edge[post] (grundplatten)
-    (herzustellendeGrundplatte) edge[post] (grundplatteBauen)
-    (fluegelHerstellen) edge[post] (1)
-    (fluegelHerstellen) edge[pre] (cncModus)
-    (herzustellendeFluegel) edge[pre, out=210, in=70] (fluegelHerstellen)
+    (grundplatteBauen) edge[post, anchor=west] node{\textbullet}(grundplatten)
+    (herzustellendeGrundplatte) edge[post, anchor=west] node{\textbullet}(grundplatteBauen)
+    (fluegelHerstellen) edge[post] node{\textbullet}(1)
+    (fluegelHerstellen) edge[pre] node{\textbullet}(cncModus)
+    (herzustellendeFluegel) edge[pre, out=210, in=80, anchor=south] node{\textbullet}(fluegelHerstellen)
     (grundplatteBauen) edge[post, out=150, in=20, anchor=south] node{\textbullet}(verbrauchtesHolz)
     (herzustellendeFluegel) edge[pre, anchor=south] node{\textbullet\textbullet\textbullet\textbullet} (auftragBearbeiten)
-    (holzlager) edge[post, in=150, out=0] (grundplatteBauen)
+    (holzlager) edge[post, in=150, out=20, anchor=south] node{\textbullet}(grundplatteBauen)
     (cncModus) edge[pre, anchor=south] node{\textbullet\textbullet\textbullet\textbullet} (grundplatteBauen)
     (1) edge[post, anchor=east, bend right] node{\textbullet\textbullet\textbullet\textbullet} (cncModusUmschalten)
-    (cncModusUmschalten) edge[post] (cncModusGrundplatte)
-    (cncModusGrundplatte) edge[post] (grundplatteBauen)
-    (auftragBearbeiten) edge[post] (herzustellendeGrundplatte)
-    (eingehendeAuftraege) edge[post] (auftragBearbeiten);
+    (cncModusUmschalten) edge[post, anchor=east] node{\textbullet}(cncModusGrundplatte)
+    (cncModusGrundplatte) edge[post, anchor=south] node{\textbullet}(grundplatteBauen)
+    (auftragBearbeiten) edge[post, anchor=south] node{\textbullet}(herzustellendeGrundplatte)
+    (eingehendeAuftraege) edge[post, anchor=west] node{\textbullet}(auftragBearbeiten);
 \end{tikzpicture}
     \caption{Modell der Anemometer Produktion}\label{Modell}
 \end{sidewaystable}
