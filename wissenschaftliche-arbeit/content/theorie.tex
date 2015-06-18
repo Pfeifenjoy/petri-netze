@@ -3,13 +3,13 @@
 
 %TODO Hier fehlt noch ein einführender Text zwischen der Über- und der Unterüberschrift
 
-\subsection{Aufbau von Petrinetzen} % (fold)
+\section{Aufbau von Petrinetzen} % (fold)
 \label{sub:aufbau_von_petrinetzen}
-	Im Prinzip können Petri-Netze als Graphen aufgefasst werden.
+	Im Prinzip können Petrinetze als Graphen aufgefasst werden.
 	Diese Graphen besitzen allerdings besondere Knoten, die als Komponenten bezeichnet werden.
-	Im folgenden werden die Komponenten eines Petri-Netzes beschrieben.
+	Im folgenden werden die Komponenten eines Petrinetzes beschrieben.
 
-	\paragraph{Plätze} sind die passiven Komponenten eines Petri-Netzes. Sie dienen repräsentieren Zustände oder lagern Objekte.
+	\paragraph{Plätze} sind die passiven Komponenten eines Petrinetzes. Sie dienen repräsentieren Zustände oder lagern Objekte.
 	Ein Platz wird durch einen Kreis dargestellt:
 	\begin{figure}[h]
 		\centering
@@ -25,8 +25,8 @@
 
 	Die Objekte, die von Plätzen gelagert werden, werden allgemein als \textbf{Marken} bezeichnet. Grundsätzlich kann ein Platz beliebig viele Marken enthalten. Außerdem können in einem Modell unterschiedliche Typen von Marken verwendet werden. Eine Marke kann ein konkretes Objekt aus der realen Welt repräsentieren (Maschinen, Werkstücke, Menschen, ...). Es können jedoch auch abstrakte Marken verwendet werden, die dann meist als schwarzer Punkt dargestellt werden, wie in Abbildung~\ref{fig:platz} zu sehen. Abstrakte Marken sind sehr nützlich, um Zustände, in dem sich das System befinden kann, zu modellieren.
 
-	\paragraph{Transitionen} sind die aktiven Komponenten eines Petri-Netzes.
-	Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten \footnote{\label{hu_berlin}\url{https://www2.informatik.hu-berlin.de/top/lehre/WS05-06/se_systementwurf/Petrinetze-1.pdf}[Stand: Juni 2015]}.
+	\paragraph{Transitionen} sind die aktiven Komponenten eines Petrinetzes.
+    Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten \footnote{\cite{hu_berlin:petrinetze:plaetze}}.
 	Eine Transition wird durch ein Quadrat dargestellt:
 	\begin{figure}[h]
 		\centering
@@ -60,7 +60,7 @@
 		\label{fig:kanten}
 	\end{figure}
 
-\subsection{Ablaufregeln}
+\section{Ablaufregeln}
 \label{ssub:ablaufregeln}
 	Der allgemeine Aufbau von Petrinetzen ist nun bekannt. Nach welchen Regeln sich ein Petrinetz genau verhält, wurde jedoch noch nicht festgelegt. In den folgenden Abschnitten sollen diese Regeln erläutert werden.
 	\\\\
@@ -213,13 +213,37 @@ Somit lässt sich verhindern, dass die Transition mehr als 10 mal ausgeführt wi
 
 
 
-\subsection{Variationen}
-Mit den zunehmenden Anforderungen an Petri-Netze sind zahlreiche Variationen von Petri-Netzen entstanden.
-Prominente Vertreter sind dabei:
+\section{Variationen}
+Mit den zunehmenden Anforderungen an Petrinetze sind zahlreiche Variationen von Petrinetzen entstanden.
+Dabei werden die Varianten in zwei Kategorien gegliedert:
 \begin{itemize}
-    \item Elementare Petri-Netze
-    \item Colored Petri-Netze
+    \item low-level Petrinetze
+    \item high-level Petrinetze
 \end{itemize}
+
+\subsection{Elementare Petrinetze}
+Häufig werden Petri Netze dazu verwendet darzustellen, wo ein Kontrollfluss aktuell steht. \footnote{(vgl. \cite[Seite 39]{hu_berlin:petrinetze})}
+Will man einen Prozess genauer analysieren geht dies am einfachsten in dem man den Prozess abstrakt darstellt.
+Dafür bieten sich elementare Petrinetze an, die auch als elementare Systemnetze bezeichnet werden.\\
+Bei einem elementaren Petrinetz werden die Marken auf den Kanten weggelassen. Außerdem gibt es nur eine Form von Marken, die in der Regel durch einen schwarzen Punkt \textbullet visualisiert wird.
+Dabei beschränkt sich ein elementares Petrinetz auf Transitionen, Plätze und Marken.
+Aufgrund der abstrakten Modellierung und geringen Anzahl an Komponenten gehören elementare Petrinetze zu den low-level Petrinetzen.
+
+\subsection{Gefärbte Petrinetze}
+Gefärbte Petrinetze werden hauptsächlich zur Modellierung komplexer Systeme verwenden, da Sie zu der Gruppe der high-level Petrinetzen gehören.
+Im Unterschied zu anderen Petrinetzen sind die gefärbten Petrinetze wesentlich übersichtlicher, können allerdings jeder Zeit wieder in ein low-level Petrinetz zurückgeführt werden.
+Dabei bieten die gefärbten Petrinetze weitere Funktionalitäten wie z.B.:
+\begin{itemize}
+    \item Typen
+    \item Knotenfunktionen
+    \item Typfunktionen
+    \item Wächterfunktionen
+    \item Kantenausdrucksfunktionen
+    \item Initialisierungsfunktionen
+\end{itemize}
+\footnote{(vgl.: \cite{tu_dresden:petrinetze})}
+auf die in diesem Dokument nicht weiter eingegangen wird.
+
 %TODO
 
 \subsection{Algorithmen}
