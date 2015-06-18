@@ -145,18 +145,18 @@
 
 	Abbildung~\ref{fig:varkanten1} zeigt ein Petrinetz mit Variablen in den Kantenbeschriftungen. In der gezeigten Markierung gibt es zwei Variablenbelegungen, für die die Transition aktiv ist:
 	\begin{itemize}
-		\item $X$ = \tikz{\node[fill]{}}	\hspace{1cm} $Y$ = \tikz{\node[token]{}} 
-		\item $X$ = \tikz{\node[token]{}}	\hspace{1cm} $Y$ = \tikz{\node[token]{}}
+		\item $X$ = \tikz{\node[fill]{};}	\hspace{1cm} $Y$ = \tikz{\node[token]{};} 
+		\item $X$ = \tikz{\node[token]{};}	\hspace{1cm} $Y$ = \tikz{\node[token]{};}
 	\end{itemize}
-	Eine Variablenbelegung mit $Y$ = \tikz{\node[fill]{}}, bei der die Transition aktiviert ist, kann es in der gezeigten Markierung nicht geben, denn in $Platz 3$ ist ausschließlich eine kreisförmige Marke vorhanden.
+	Eine Variablenbelegung mit $Y$ = \tikz{\node[fill]{};}, bei der die Transition aktiviert ist, kann es in der gezeigten Markierung nicht geben, denn in $Platz 3$ ist ausschließlich eine kreisförmige Marke vorhanden.
 	
 	Wenn eine Transition aktiviert ist, dann kann sie \textbf{eintreten}. Beim Ablauf eines Petrinetzes kann in einer Markierung immer nur eine Transition eintreten. Welche der aktivierten Transitionen eintritt, ist nicht deterministisch bestimmt. Durch das Eintreten einer Transition wird eine neue Markierung für das Petrinetz erzeugt. Dabei werden aus allen Plätzen, von denen eine Kante auf die Transition zeigen, die in der Kantenbeschriftung angegebenen Marken entfernt. Außerdem werden zu allen Plätzen, auf die eine Kante zeigt, die bei der Transition beginnt, die in der Kantenbeschriftung angegebenen Marken hinzugefügt.
 
 	Wenn die Kantenbeschriftungen Variablen enthalten, müssen zunächst die Werte aus der Variablenbelegung, für die die Transition aktiv ist, eingesetzt werden. 
 
-	Wenn die Transition $Produkt herstellen$ in Abbildung~\ref{fig:markierung1} eintritt, dann wird aus de Platz $Lagerbestand$ ein Marke \tikz{\node[draw,regular polygon,regular polygon sides=3,inner sep=1pt]{}} entfernt und aus dem Platz $Auftrag liegt vor$ wird eine Marke \tikz{\node[token]{}} entfernt. Außerdem wird zum Platz $Endprodukt$ eine Marke \tikz{\node[draw]{}} hinzugefügt. So entsteht die Markierung, die in Abbildung~\ref{fig:markierung2} zu sehen ist.
+	Wenn die Transition $Produkt herstellen$ in Abbildung~\ref{fig:markierung1} eintritt, dann wird aus de Platz $Lagerbestand$ ein Marke \tikz{\node[draw,regular polygon,regular polygon sides=3,inner sep=1pt]{};} entfernt und aus dem Platz $Auftrag liegt vor$ wird eine Marke \tikz{\node[token]{};} entfernt. Außerdem wird zum Platz $Endprodukt$ eine Marke \tikz{\node[draw]{};} hinzugefügt. So entsteht die Markierung, die in Abbildung~\ref{fig:markierung2} zu sehen ist.
 
-	Wie oben bereits erläutert, ist die Transition aus Abbildung~\ref{fig:varkanten1} für die Variablenbelegung $X$ = \tikz{\node[fill]{}}, $Y$ = \tikz{\node[token]{}} aktiviert. Wenn die Transition unter dieser Variablenbelegung eintritt, wird aus $Platz 3$ eine Marke \tikz{\node[token]{}} und aus $Platz 1$ eine Marke \tikz{\node[fill]{}} entfernt. Aus $Platz 2$ wird zunächst ebenfalls eine Marke \tikz{\node[fill]{}} entfernt und die Marken \tikz{\node[fill]{}} und \tikz{\node[token]{}} wieder hinzugefügt. Außerdem wird zu $Platz 4$ eine Marke \tikz{\node[fill]{}} hinzugefügt.
+	Wie oben bereits erläutert, ist die Transition aus Abbildung~\ref{fig:varkanten1} für die Variablenbelegung $X$ = \tikz{\node[fill]{};}, $Y$ = \tikz{\node[token]{};} aktiviert. Wenn die Transition unter dieser Variablenbelegung eintritt, wird aus $Platz 3$ eine Marke \tikz{\node[token]{};} und aus $Platz 1$ eine Marke \tikz{\node[fill]{};} entfernt. Aus $Platz 2$ wird zunächst ebenfalls eine Marke \tikz{\node[fill]{};} entfernt und die Marken \tikz{\node[fill]{};} und \tikz{\node[token]{};} wieder hinzugefügt. Außerdem wird zu $Platz 4$ eine Marke \tikz{\node[fill]{};} hinzugefügt.
 
 	\begin{figure}[h]
 		\centering
@@ -185,125 +185,78 @@
 		\label{fig:varkanten2}
 	\end{figure}
 
+	Ein weiteres Beispiel für den Ablauf eines Systemnetzes sind \textbf{Zähler}. Diese erleichtern unter anderem die Modellierung von Lagern mit begrenzten Stückzahlen. Der Zähler, der in Abbildung~\ref{fig:zaehler} zu sehen ist, besteht aus einer Transition, die maximal 10 mal eintreten kann. Als Marke in $Platz 1$ wird eine natürliche Zahl verwendet. Bei jedem Eintritt der Transition wird diese in Form der Variable $x$ aus dem Platz entnommen und dafür die Zahl $x-1$ wieder hinzugefügt. So verringert sich die Zahl in der Stelle bei jedem Eintreten der Transition um 1. Die Transition hat außerdem als Vorbedingung, dass $x > 0$ gelten muss. Deshalb kann sie insgesamt nur 10 mal eintreten.
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\node(left){};
+			\node[right=3cm of left](right){};
+			\node[transition, right=1cm of left, left=1cm of right](transition){$x>0$}
+			edge[pre, dashed] (left)
+			edge[post, dashed] (right);
+			\node[place, below= of transition,label=below:Platz 1] {10}
+			edge[pre, anchor=east, transform canvas={xshift=-1mm}] node {$x$} (transition)
+			edge[post, anchor=west, transform canvas={xshift=1mm}] node {$x-1$} (transition);
+		\end{tikzpicture}
+		\caption{Ein Zähler}
+		\label{fig:zaehler}
+	\end{figure}
+\section{Weitere Ausdrucksmöglichkeiten}
+	% @:    so sagen?
+	\paragraph{Schnittstellen} ermöglichen auf Aktivitäten aus der Umgebung einzugehen.
+	Mit Hilfe der bisherig vorgestellten Bestandteile lassen sich bereits geschlossene Systeme modellieren.
+	Sollen allerdings Interaktionen eines Geschäftsprozesses mit z.B. einem Kunden modelliert werden, benötigt man Schnittstellen.
+	Diese werden durch eine Transition dargestellt.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% @:    so sagen?
-\paragraph{Schnittstellen} ermöglichen auf Aktivitäten aus der Umgebung einzugehen.
-Mit Hilfe der bisherig vorgestellten Bestandteile lassen sich bereits geschlossene Systeme modellieren.
-Sollen allerdings Interaktionen eines Geschäftsprozesses mit z.B. einem Kunden modelliert werden, benötigt man Schnittstellen.
-Diese werden durch eine Transition dargestellt.
-
-\paragraph{Kalte Transitionen} dienen der Modellierung von Transitionen, bei denen nicht klar ist ob sie eintreffen.
-Wird z.B. ein Prozess von einem Kunden durch dessen Bezahlung ausgelöst, ist im Vorhinein nicht klar ob dieses Ereignis jemals eintreffen wird.
-Ist das Gegenteil der Fall wird die Transition als \enquote{warm} bezeichnet.
-Kalte Transitionen werden durch eine Transition dargestellt, die ein $\epsilon$ beinhalten dargestellt.
-\begin{center}
-	\begin{tikzpicture}
-		\node[transition]{$\epsilon$};
-	\end{tikzpicture}
-\end{center}
-
-\paragraph{Zähler} erleichtern insbesondere die Modellierung von Lagern.
-Können z.B. in einem Lager maximal 10 Stücke eines Materials gespeichert werden.
-Um dies anschaulich zu modellieren wird der Transaktion ein Parameter $x$ übergeben.
-Dabei wird die Transition als Funktion aufgefasst und mit Rückgabewert $x - 1$.
-\begin{center}
-	\begin{tikzpicture}
-		\node(left){};
-		\node[right=3cm of left](right){};
-		\node[transition, right=1cm of left, left=1cm of right](transition){$x>0$}
-		edge[pre, dashed] (left)
-		edge[post, dashed] (right);
-		\node[place, below= of transition] {10}
-		edge[pre, anchor=east, transform canvas={xshift=-1mm}] node {$x$} (transition)
-		edge[post, anchor=west, transform canvas={xshift=1mm}] node {$x-1$} (transition);
-
-	\end{tikzpicture}
-\end{center}
-Somit lässt sich verhindern, dass die Transition mehr als 10 mal ausgeführt wird.
-
-
+	\paragraph{Kalte Transitionen} dienen der Modellierung von Transitionen, bei denen nicht klar ist ob sie eintreffen.
+	Wird z.B. ein Prozess von einem Kunden durch dessen Bezahlung ausgelöst, ist im Vorhinein nicht klar ob dieses Ereignis jemals eintreffen wird.
+	Ist das Gegenteil der Fall wird die Transition als \enquote{warm} bezeichnet.
+	Kalte Transitionen werden durch eine Transition dargestellt, die ein $\epsilon$ beinhalten dargestellt.
+	\begin{center}
+		\begin{tikzpicture}
+			\node[transition]{$\epsilon$};
+		\end{tikzpicture}
+	\end{center}
 
 \section{Variationen}
-Mit den zunehmenden Anforderungen an Petrinetze sind zahlreiche Variationen von Petrinetzen entstanden.
-Dabei werden die Varianten in zwei Kategorien gegliedert:
-\begin{itemize}
-    \item low-level Petrinetze
-    \item high-level Petrinetze
-\end{itemize}
+	Mit den zunehmenden Anforderungen an Petrinetze sind zahlreiche Variationen von Petrinetzen entstanden.
+	Dabei werden die Varianten in zwei Kategorien gegliedert:
+	\begin{itemize}
+	    \item low-level Petrinetze
+	    \item high-level Petrinetze
+	\end{itemize}
 
-\subsection{Elementare Petrinetze}
-Häufig werden Petri Netze dazu verwendet darzustellen, wo ein Kontrollfluss aktuell steht. \footnote{(vgl. \cite[Seite 39]{hu_berlin:petrinetze})}
-Will man einen Prozess genauer analysieren geht dies am einfachsten in dem man den Prozess abstrakt darstellt.
-Dafür bieten sich elementare Petrinetze an, die auch als elementare Systemnetze bezeichnet werden.\\
-Bei einem elementaren Petrinetz werden die Marken auf den Kanten weggelassen. Außerdem gibt es nur eine Form von Marken, die in der Regel durch einen schwarzen Punkt \textbullet visualisiert wird.
-Dabei beschränkt sich ein elementares Petrinetz auf Transitionen, Plätze und Marken.
-Aufgrund der abstrakten Modellierung und geringen Anzahl an Komponenten gehören elementare Petrinetze zu den low-level Petrinetzen.
+	\subsection{Elementare Petrinetze}
+		Häufig werden Petri Netze dazu verwendet darzustellen, wo ein Kontrollfluss aktuell steht. \footnote{(vgl. \cite[Seite 39]{hu_berlin:petrinetze})}
+		Will man einen Prozess genauer analysieren geht dies am einfachsten in dem man den Prozess abstrakt darstellt.
+		Dafür bieten sich elementare Petrinetze an, die auch als elementare Systemnetze bezeichnet werden.\\
+		Bei einem elementaren Petrinetz werden die Marken auf den Kanten weggelassen. Außerdem gibt es nur eine Form von Marken, die in der Regel durch einen schwarzen Punkt \textbullet visualisiert wird.
+		Dabei beschränkt sich ein elementares Petrinetz auf Transitionen, Plätze und Marken.
+		Aufgrund der abstrakten Modellierung und geringen Anzahl an Komponenten gehören elementare Petrinetze zu den low-level Petrinetzen.
 
-\subsection{Gefärbte Petrinetze}
-Gefärbte Petrinetze werden hauptsächlich zur Modellierung komplexer Systeme verwenden, da Sie zu der Gruppe der high-level Petrinetzen gehören.
-Im Unterschied zu anderen Petrinetzen sind die gefärbten Petrinetze wesentlich übersichtlicher, können allerdings jeder Zeit wieder in ein low-level Petrinetz zurückgeführt werden.
-Dabei bieten die gefärbten Petrinetze weitere Funktionalitäten wie z.B.:
-\begin{itemize}
-    \item Typen
-    \item Knotenfunktionen
-    \item Typfunktionen
-    \item Wächterfunktionen
-    \item Kantenausdrucksfunktionen
-    \item Initialisierungsfunktionen
-\end{itemize}
-\footnote{(vgl.: \cite{tu_dresden:petrinetze})}
-auf die in diesem Dokument nicht weiter eingegangen wird.
+	\subsection{Gefärbte Petrinetze}
+		Gefärbte Petrinetze werden hauptsächlich zur Modellierung komplexer Systeme verwenden, da Sie zu der Gruppe der high-level Petrinetzen gehören.
+		Im Unterschied zu anderen Petrinetzen sind die gefärbten Petrinetze wesentlich übersichtlicher, können allerdings jeder Zeit wieder in ein low-level Petrinetz zurückgeführt werden.
+		Dabei bieten die gefärbten Petrinetze weitere Funktionalitäten wie z.B.:
+		\begin{itemize}
+		    \item Typen
+		    \item Knotenfunktionen
+		    \item Typfunktionen
+		    \item Wächterfunktionen
+		    \item Kantenausdrucksfunktionen
+		    \item Initialisierungsfunktionen
+		\end{itemize}
+		\footnote{(vgl.: \cite{tu_dresden:petrinetze})}
+		auf die in diesem Dokument nicht weiter eingegangen wird.
 
-%TODO
+	%TODO
 
-\subsection{Algorithmen}
-%TODO
+	\subsection{Algorithmen}
+	%TODO
 
-\subsubsection{Verifikation}
-%TODO
+	\subsubsection{Verifikation}
+	%TODO
 
-\subsubsection{Analyse}
-%TODO
+	\subsubsection{Analyse}
+	%TODO
 
