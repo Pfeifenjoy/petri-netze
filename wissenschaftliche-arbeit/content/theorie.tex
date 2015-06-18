@@ -111,27 +111,79 @@
 	Als nächstes wird erklärt, wann man eine Transition als \textbf{aktiviert} bezeichnet. Anschaulich gesehen ist eine Transition $t$ in einer bestimmten Markierung aktiviert, wenn alle Plätze, aus denen $t$ Marken entnimmt, dafür genug Marken beinhalten.
 	Formal muss also jeder Platz, von dem eine Kante auf $t$ zeigt, von jedem Markentyp genausoviele oder mehr Marken beinhalten als in der Beschriftung der Kante angegeben.
 
-	Im Petrinetz aus Abbildung~\ref{fig:markierung1} entnimmt die Transition $Produkt herstellen$ eine dreieckige Markierung aus der Stelle $Lagerbestand$ und eine schwarze Markierung aus $Auftrag liegt vor$. Beide Stellen enthalten die geforderten Marken. Also ist die Transition aktiviert.
+	Im Petrinetz aus Abbildung~\ref{fig:markierung1} entnimmt die Transition $Produkt herstellen$ eine dreieckige Marke aus dem Platz $Lagerbestand$ und eine schwarze Marke aus $Auftrag liegt vor$. Beide Plätze enthalten die geforderten Marken. Also ist die Transition aktiviert.
 
-	In Abbildung~\ref{fig:markierung2} ist das selbe Petrinetz in einer anderen Markierung dargestellt. Hier enthält $Auftrag liegt vor$ noch genug schwarze Marken. Aus dem Platz $Lagerbestand$ entnimmt die Transition eine dreieckige Marke, aber in dem Platz sind nur Rautenfürmige Marken enthalten. Daher ist die Transition in Markierung 2 nicht aktiviert.
+	In Abbildung~\ref{fig:markierung2} ist das selbe Petrinetz in einer anderen Markierung dargestellt. Hier enthält $Auftrag liegt vor$ genug schwarze Marken. Aus dem Platz $Lagerbestand$ entnimmt die Transition jedoch eine dreieckige Marke, aber in dem Platz sind nur Rautenfürmige Marken enthalten. Daher ist die Transition in Markierung 2 nicht aktiviert.
 
 	Diese Vorgehensweise funktioniert für Kanten, die mit konstanten Termen beschriftet sind. Wenn im Term einer Kante Variablen vorkommen, muss zunächst eine Belegung der Variablen mit echten Werten gefunden werden, für die diese Bedingung zutrifft. Außerdem muss die Formel in der Transition für die Variablenbelegung wahr sein. Wenn eine passende Variablenbelegung existiert, dann ist die Transition in der entsprechenden Markierung unter dieser Variablenbelegung aktiviert. Andernfalls ist die Transition nicht aktiviert.
 
 	\begin{figure}[h]
 		\centering
 		\begin{tikzpicture}
-			\node[transition](t){};
+			\node[place,label=below:Platz 1](p1){}
+				[children are tokens]
+				child{node[token]{}}
+				child{node[draw,fill]{}};
+			\node[place,label=below:Platz 2,below=of p1](p2){}
+				[children are tokens]
+				child{node[token]{}}
+				child{node[draw,fill]{}};
+			\node[place,label=below:Platz 3,below=of p2,tokens=1](p3){};
+
+			\node[transition,right=3cm of p2](t){}
+				edge[pre,bend right]	node[right]{X}		(p1)
+				edge[pre,bend right]	node[below]{X}		(p2)
+				edge[post,bend left]	node[below]{X,Y}	(p2)
+				edge[pre,bend left]		node[below]{Y}		(p3);
+
+			\node[place,right=of t,label=below:Platz 4](pr){}
+				edge[pre] node[below]{X} (t);
 		\end{tikzpicture}
 		\caption{Ein Petrinetz mit Variablen in den Kantenbeschriftungen}
-		\label{fig:figure1}
+		\label{fig:varkanten1}
 	\end{figure}
 
+	Abbildung~\ref{fig:varkanten1} zeigt ein Petrinetz mit Variablen in den Kantenbeschriftungen. In der gezeigten Markierung gibt es zwei Variablenbelegungen, für die die Transition aktiv ist:
+	\begin{itemize}
+		\item $X$ = \tikz{\node[fill]{}}	\hspace{1cm} $Y$ = \tikz{\node[token]{}} 
+		\item $X$ = \tikz{\node[token]{}}	\hspace{1cm} $Y$ = \tikz{\node[token]{}}
+	\end{itemize}
+	Eine Variablenbelegung mit $Y$ = \tikz{\node[fill]{}}, bei der die Transition aktiviert ist, kann es in der gezeigten Markierung nicht geben, denn in $Platz 3$ ist ausschließlich eine kreisförmige Marke vorhanden.
+	
+	Wenn eine Transition aktiviert ist, dann kann sie \textbf{eintreten}. Beim Ablauf eines Petrinetzes kann in einer Markierung immer nur eine Transition eintreten. Welche der aktivierten Transitionen eintritt, ist nicht deterministisch bestimmt. Durch das Eintreten einer Transition wird eine neue Markierung für das Petrinetz erzeugt. Dabei werden aus allen Plätzen, von denen eine Kante auf die Transition zeigen, die in der Kantenbeschriftung angegebenen Marken entfernt. Außerdem werden zu allen Plätzen, auf die eine Kante zeigt, die bei der Transition beginnt, die in der Kantenbeschriftung angegebenen Marken hinzugefügt.
 
+	Wenn die Kantenbeschriftungen Variablen enthalten, müssen zunächst die Werte aus der Variablenbelegung, für die die Transition aktiv ist, eingesetzt werden. 
 
+	Wenn die Transition $Produkt herstellen$ in Abbildung~\ref{fig:markierung1} eintritt, dann wird aus de Platz $Lagerbestand$ ein Marke \tikz{\node[draw,regular polygon,regular polygon sides=3,inner sep=1pt]{}} entfernt und aus dem Platz $Auftrag liegt vor$ wird eine Marke \tikz{\node[token]{}} entfernt. Außerdem wird zum Platz $Endprodukt$ eine Marke \tikz{\node[draw]{}} hinzugefügt. So entsteht die Markierung, die in Abbildung~\ref{fig:markierung2} zu sehen ist.
 
+	Wie oben bereits erläutert, ist die Transition aus Abbildung~\ref{fig:varkanten1} für die Variablenbelegung $X$ = \tikz{\node[fill]{}}, $Y$ = \tikz{\node[token]{}} aktiviert. Wenn die Transition unter dieser Variablenbelegung eintritt, wird aus $Platz 3$ eine Marke \tikz{\node[token]{}} und aus $Platz 1$ eine Marke \tikz{\node[fill]{}} entfernt. Aus $Platz 2$ wird zunächst ebenfalls eine Marke \tikz{\node[fill]{}} entfernt und die Marken \tikz{\node[fill]{}} und \tikz{\node[token]{}} wieder hinzugefügt. Außerdem wird zu $Platz 4$ eine Marke \tikz{\node[fill]{}} hinzugefügt.
 
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\node[place,label=below:Platz 1,tokens=1](p1){};
+			\node[place,label=below:Platz 2,below=of p1](p2){}
+				[children are tokens]
+				child{node[token]{}}
+				child{node[token]{}}
+				child{node[draw,fill]{}};
+			\node[place,label=below:Platz 3,below=of p2](p3){};
 
+			\node[transition,right=3cm of p2](t){}
+				edge[pre,bend right]	node[right]{X}		(p1)
+				edge[pre,bend right]	node[below]{X}		(p2)
+				edge[post,bend left]	node[below]{X,Y}	(p2)
+				edge[pre,bend left]		node[below]{Y}		(p3);
 
+			\node[place,right=of t,label=below:Platz 4](pr){}
+				[children are tokens]
+				child{node[draw,fill]{}};
+				
+			\draw (pr) edge[pre] node[below]{X} (t);
+		\end{tikzpicture}
+		\caption{Das Petrinetz aus Abbildung~\ref{fig:varkanten1} nach dem Eintreten der Transition.}
+		\label{fig:varkanten2}
+	\end{figure}
 
 
 
