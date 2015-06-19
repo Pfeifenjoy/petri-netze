@@ -249,7 +249,256 @@
 		\footnote{(vgl.: \cite{tu_dresden:petrinetze})}
 		auf die in diesem Dokument nicht weiter eingegangen wird.
 
-	%TODO
+\section{Analyse und Verifikation mit Platzinvarianten}
+	Es gibt verschiedene Möglichkeiten zur Analyse von Petrinetzen. Grundsätzlich kann man dabei zwischen der Analyse von Zustands- und Ablaufeigenschaften unterscheiden. Bei ersterem untersucht man Eigenschaften, die allgemein für alle im Systemnetz erreichbaren Markierungen gelten. Ablaufeigenschaften wiederum beschreiben Eigenschaften von Markierungen, welche nach mehreren Schritten aus anderen Markierungen hervorgehen können.
 
-	\subsubsection{Analyse und Verifikation}
-	
+	In den folgenden Abschnitten wird exemplarisch die Bestimmung von Platzinvarianten in elementaren Systemnetzen beschrieben. Dabei geht es darum, Gleichungen zu finden, die für jede erreichbare Markierung gelten. Diese kann man dann beispielsweise dafür verwenden, das Modell zu verifizieren.
+
+	\subsection{Einführung}
+	\label{sub:platzinvarianten_einf}
+		Oft werden in Petrinetzen Material- oder Informationsflüsse modelliert. Dabei wird nichts erzeugt oder verbraucht, sondern das Material oder die Informationen werden bloß transportiert. Äquivalent dazu werden auch die entsprechenden Marken im Petrinetz nicht erzeugt oder zerstört, sondern nur von Platz zu Platz verschoben. Ein Beispiel ist in Abbildung~\ref{fig:exinvariantsimple} zu sehen. Die Gesamtzahl der Marken bleibt hier immer gleich. Wenn man mit $|Platz|$ die Anzahl der Marken im gegebenen Platz bezeichnet, kann man bei diesem Beispiel sagen, dass die Gleichung
+
+		$$|P_1| + |P_2| + |P_3| = 5$$
+
+		immer wahr ist.	Ziel der Platzinvarianten ist es solche Gleichungen auch in größeren Petrinetzen zu finden.
+
+		\begin{figure}[h]
+			\centering
+			\begin{tikzpicture}
+				\node[place,label=below:$P_1$,tokens=5](p1){};
+				\node[transition,label=below:$P_1$ nach $P_2$,right=2cm of p1](t1){}
+					edge[pre](p1);
+				\node[place,label=below:$P_2$,right=2cm of t1](p2){}
+					edge[pre](t1);
+				\node[transition,label=below:$P_2$ nach $P_3$,right=2cm of p2](t2){}
+					edge[pre](p2);
+				\node[place,label=below:$P_3$,right=2cm of t2](p3){}
+					edge[pre](t2);
+			\end{tikzpicture}
+			\caption{Ein einfaches Petrinetz mit einer Platzinvariante.}
+			\label{fig:exinvariantsimple}
+		\end{figure}
+		
+		Platzinvarianten sind jedoch noch etwas allgemeiner anwendbar. In Abbildung~\ref{fig:exinvariant} ist ein einfaches Systemnetz zum Verpacken von Produkten dargestellt. Auch hier werden wieder Materialflüsse dargestellt. Dabei werden Produkte mit Verpackungen zu verpackten Produkten kombiniert. Auch wenn so kein Material erzeugt oder zerstört wird, bleibt die Anzahl der Marken hier nicht gleich. Trotzdem lässt sich das Petrinetz mit einer Platzinvariante beschreiben.
+
+		\begin{figure}[h]
+			\centering
+			\begin{tikzpicture}
+				\node[transition,label=left:verpacken](t){};
+				\node[place,label=above:Produkte,above=of t,tokens=4](p1){}
+					edge[post](t);
+				\node[place,label=below:Verpackungen,below=of t,tokens=3](p2){}
+					edge[post](t);
+				\node[place,label=below:Verpackte Produkte,right=2cm of t,tokens=2](p3){}
+					edge[pre](t);
+			\end{tikzpicture}
+			\caption{Auch für Petrinetze wie dieses kann man Invarianten finden.}
+			\label{fig:exinvariant}
+		\end{figure}
+		
+		Eine Marke in $Verpackte Produkte$ ist nämlich genauso viel wert, wie eine Marke in $Produkte$ zusammen mit einer Marke aus $Verpackungen$. Um auszudrücken, dass eine Marke aus $Verpackte Produkte$ zwei Marken aus den anderen Plätzen entspricht, kann man die Anzahl der Marken in $Verpackte Produkte$ mit zwei multiplizieren. Dann gillt immer die Gleichung:
+
+		$$2\cdot|Verpackte Produkte| + |Produkte| + |Verpackungen| = 11$$
+
+	\subsection{Formale Definition}
+	\label{sub:formale_definition}
+		Gegeben sei ein Elementares Petrinetz mit $k$ Plätzen. Wenn man die Plätze als $P_1$,~$P_2$,~$P_3$,~...,~$P_k$ bezeichnet und jedem Platz $P_t$ eine Zahl $n_t$ zuordnet, dann hat die Gleichung einer Platzinvariante die Form:
+		$$
+		\sum_{s=1}^k n_s \cdot |P_s| = n_1 \cdot |P_1| + n_2 \cdot |P_2| + .... + n_k \cdot |P_k| = c
+		$$
+		Dabei wird c als die Konstante der Platzinvariante bezeichnet. 
+
+		Die Zahlen $n_1$, $n_2$, ..., $n_t$ werden genau dann als Platzinvariante bezeichnet, wenn sich $c$ beim Eintreten einer beliebige Transition in einer beliebigen Markierung nicht ändert.
+
+	\subsection{Platzinvarianten bestimmen}
+		Die Platzinvarianten aus den beiden vorherigen Beispielen (Abbildung~\ref{fig:exinvariantsimple}~und~\ref{fig:exinvariant}) kann man mit etwas Übung schon beim Betrachten des Petrinetzes erkennen. Bei größeren Petrinetzen wird das jedoch schwieriger und fehleranfälliger. Deshalb soll im folgenden Abschnitt ein Verfahren zum Finden von Platzinvarianten in beliebig komplexen Petrinetzen vorgestellt werden. Als Beispiel wird dabei das Petrinetz aus Abbildung~\ref{fig:invariantdemo} dienen.
+
+		\begin{figure}[h]
+			\centering
+			\begin{tikzpicture}
+				\node[place,tokens=7,label=below:$P_1$](p1){};
+				\node[transition,right=of p1,label=below:$T_1$](t1){};
+				\node[place,right=of t1,label=below:$P_2$](p2){};
+				\node[place,below=of p2,label=below:$P_3$](p3){};
+				\node[place,above=of p2,label=below:$P_4$](p4){};
+				\node[transition,right=of p2,label=below:$T_2$](t2){};
+				\node[place,above right=of t2,label=below:$P_5$](p5){};
+				\node[place,below right=of t2,label=below:$P_6$](p6){};
+				\node[transition,right=of p6,label=below:$T_3$](t3){};
+				\node[place,right=of t3,label=below:$P_7$](p7){};
+
+				\draw (p1) edge[post] node[token]{} (t1);
+				\draw (t1) edge[post] node[tokens=2]{} (p2);
+				\draw (t1) edge[post] node[tokens=2]{} (p3);
+				\draw (t1) edge[post] node[token]{} (p4);
+				\draw (p2) edge[post] node[token]{} (t2);
+				\draw (p3) edge[post] node[tokens=2]{} (t2);
+				\draw (t2) edge[post] node[token]{} (p5);
+				\draw (t2) edge[post] node[token]{} (p6);
+				\draw (p5) edge[post] node[token]{} (t3);
+				\draw (p6) edge[post] node[token]{} (t3);
+				\draw (p4) edge[post] node[token]{} (t3);
+				\draw (t3) edge[post,bend left=70] node[token]{} (p1);
+				\draw (t3) edge[post] node[token]{} (p7);
+
+			\end{tikzpicture}
+			\caption{Ein Beispielnetz zum Bestimmen von Platzinvarianten}
+			\label{fig:invariantdemo}
+		\end{figure}
+
+		Um die Notation zu vereinfachen, definieren wir uns zunächst die Hilfsfunktion $d(t,p)$. Diese soll die Veränderung beschreiben, die eine Transition an einem Platz durchführt, wenn sie eintritt. Wenn $t$ eine Transition ist und $p$ ein Platz, dann ist 
+
+		$$d(t,p) := (\text{Anzahl der Marken, die t in p erzeugt}) - (\text{Anzahl der Marken, die t aus p entnimmt})$$
+		
+		Im Beispielpetrinetz aus Abbildung~\ref{fig:invariantdemo} lauten die Funktionswerte von $d$ wie folgt:
+
+		\begin{center}		
+			\begin{tabular}{ccc}
+				$d(T_1,P_1) = -1$ 	& $d(T_2,P_1) = 0$ 		& $d(T_3,P_1) = 1$ 		\\
+				$d(T_1,P_2) = 2$ 	& $d(T_2,P_2) = -1$ 	& $d(T_3,P_2) = 0$ 		\\
+				$d(T_1,P_3) = 2$ 	& $d(T_2,P_3) = -2$ 	& $d(T_3,P_3) = 0$ 		\\
+				$d(T_1,P_4) = 1$ 	& $d(T_2,P_4) = 0$ 		& $d(T_3,P_4) = -1$ 	\\
+				$d(T_1,P_5) = 0$ 	& $d(T_2,P_5) = 1$ 		& $d(T_3,P_5) = -1$ 	\\
+				$d(T_1,P_6) = 0$ 	& $d(T_2,P_6) = 1$ 		& $d(T_3,P_6) = -1$ 	\\
+				$d(T_1,P_7) = 0$ 	& $d(T_2,P_7) = 0$ 		& $d(T_3,P_7) = 1$ 		\\
+			\end{tabular}
+		\end{center}
+
+		Um eine Platzinvariante zu finden, müssen konkrete Werte für die Variablen $n_1$, $n_2$, ..., $n_t$ bestimmt werden. Diese müssen der Bedingung aus Abschnitt~\ref{sub:formale_definition} entsprechen: Beim Eintreten einer beliebigen Transition darf sich die Konstante $c$ der Schleifeninvariante nicht verändern. Die Veränderung von $c$ beim Eintreten einer Transition $t$ berechnet sich durch:
+		$$
+		\Delta c = \sum_{s=1}^k n_s \cdot d(t, P_s) = n_1 \cdot d(t, P_1) + n_2 \cdot d(t, P_2) + .... + n_k \cdot d(t, P_k)
+		$$
+		Indem man nun für jede Transition die Veränderung der Konstante mit $0$ gleichsetzt, erzwingt man, dass die Bedingung für die Platzinvariante eingehalten wird. Für jede Transition $t$ muss also gelten: 
+		$$
+		\sum_{s=1}^k n_s \cdot d(t, P_s) = n_1 \cdot d(t, P_1) + n_2 \cdot d(t, P_2) + .... + n_k \cdot d(t, P_k) = 0
+		$$
+		So entsteht ein lineares Gleichungssystem, das zum Beispiel mit dem Gaußschesn Eliminationsverfahren gelöst werden kann. Beim Petrinetz aus Abbildung~\ref{fig:invariantdemo} ergeben sich die folgenden Gleichungen:
+		$$
+		\begin{vmatrix}
+			T_1: & n_1 \cdot (-1) &+ n_2 \cdot 2 &+ n_3 \cdot 2 &+ n_4 \cdot 1 &+ n_5 \cdot 0 &+ n_6 \cdot 0 &+ n_7 \cdot 0 & = 0 \\
+			T_2: & n_1 \cdot 0 &+ n_2 \cdot (-1) &+ n_3 \cdot (-2) &+ n_4 \cdot 0 &+ n_5 \cdot 1 &+ n_6 \cdot 1 &+ n_7 \cdot 0 & = 0 \\
+			T_3: & n_1 \cdot 1 &+ n_2 \cdot 0 &+ n_3 \cdot 0 &+ n_4 \cdot (-1) &+ n_5 \cdot (-1) &+ n_6 \cdot (-1) &+ n_7 \cdot 1 & = 0 \\
+		\end{vmatrix}
+		$$
+		Durch Lösen des Gleichungssystems kommt man auf die Werte für $n_1$,~$n_2$,~...,~$n_7$. Jede Lösung ist eine Platzinvariante des Petrinetzes. Das Gleichungssystem hat unendlich viele Lösungen, entsprechend gibt es auch unendlich viele Platzinvarianten. Einige exemplarische Lösungen lauten:
+		$$
+		\begin{matrix}
+			\text{Platzinvariante 1}: & n_1 = 2 	& n_2 = 0 	& n_3 = 1 	& n_4 = 0 	& n_5 = 2 	& n_6 = 0 	& n_7 = 0 \\
+			\text{Platzinvariante 2}: & n_1 = 1 	& n_2 = 0 	& n_3 = 0 	& n_4 = 1 	& n_5 = 0 	& n_6 = 0 	& n_7 = 0 \\
+			\text{Platzinvariante 3}: & n_1 = 2 	& n_2 = 0 	& n_3 = 1 	& n_4 = 0 	& n_5 = 0 	& n_6 = 2 	& n_7 = 0 \\
+			\text{Platzinvariante 4}: & n_1 = -2	& n_2 = -2 	& n_3 = 1 	& n_4 = 0 	& n_5 = 0 	& n_6 = 0 	& n_7 = 2 \\
+		\end{matrix}
+		$$
+		Um die Gleichung der Platzinvarianten zu bestimmen, fehlen noch die Konstanten der Platzinvarianten. Diese können aus der Anfangsmarkierung nach der Formel aus Abschnitt~\ref{sub:formale_definition} berechnet werden. Für die oben bestimmten Platzinvarianten ergibt sich so:
+		$$
+		\begin{matrix}
+			\text{Platzinvariante 1}: & c = 14 	\\
+			\text{Platzinvariante 2}: & c = 7 	\\
+			\text{Platzinvariante 3}: & c = 14 	\\
+			\text{Platzinvariante 4}: & c = -14 \\
+		\end{matrix}
+		$$
+		Anschließend können die Gleichungen der Platzinvarianten aufgeschrieben werden. Dafür müssen die Werte für $n_1$,~$n_2$,~...,~$n_k$ sowie für c in die Formel aus Abschnitt~\ref{sub:formale_definition} eingesetzt werden. So erhält man für das Systemnetz aus Abbildung~\ref{fig:invariantdemo} die folgenden Gleichungen:
+		$$
+		\begin{matrix}
+			\text{Platzinvariante 1}: & 2 \cdot |P_1| + |P_3| + 2 \cdot |P_5| = 14 \\
+			\text{Platzinvariante 2}: & |P_1| + |P_4| = 7 \\
+			\text{Platzinvariante 3}: & 2 \cdot |P_1| + |P_3| + 2 \cdot |P_6| = 14 \\
+			\text{Platzinvariante 4}: & (-2) \cdot |P_1| + (-2) \cdot |P_2| + |P_3| + 2 \cdot |P_7|= -14 \\
+		\end{matrix}
+		$$
+		Diese Gleichungen gelten in allen erreichbaren Markierungen.
+
+		Das gezeigte Verfahren ist universell einsetzbar und ermöglicht es, alle Platzinvarianten eines gegebenen Systemnetzes zu finden. Da es in der Hauptsache auf dem Lösen eines Linearen Gleichungssystems beruht, sollte es außerdem möglich sein, das Verfahren zu automatisieren. Wie man anhand der Gleichung der Platzinvariante 4 sieht, gehen die Ergebnisse der Analyse über die in Abschnitt~\ref{sub:platzinvarianten_einf} vorgestellte Analogie zu Material- oder Informationsflüssen hinaus, denn durch die negativen Koeffizienten lässt sich diese hier nicht anwenden. Welche Möglichkeiten die Gleichungen der Platzinvarianten zum weiteren Vorgehen bieten, wird in Kapitel~\ref{chap:fallstudie}~-~\nameref{chap:fallstudie} besprochen. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
