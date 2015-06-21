@@ -185,7 +185,7 @@
 		\label{fig:varkanten2}
 	\end{figure}
 
-	Ein weiteres Beispiel für den Ablauf eines Systemnetzes sind \textbf{Zähler}. Diese erleichtern unter anderem die Modellierung von Lagern mit begrenzten Stückzahlen. Der Zähler, der in Abbildung~\ref{fig:zaehler} zu sehen ist, besteht aus einer Transition, die maximal 10 mal eintreten kann. Als Marke in $Platz 1$ wird eine natürliche Zahl verwendet. Bei jedem Eintritt der Transition wird diese in Form der Variable $x$ aus dem Platz entnommen und dafür die Zahl $x-1$ wieder hinzugefügt. So verringert sich die Zahl in der Stelle bei jedem Eintreten der Transition um 1. Die Transition hat außerdem als Vorbedingung, dass $x > 0$ gelten muss. Deshalb kann sie insgesamt nur 10 mal eintreten.
+	Ein weiteres Beispiel für den Ablauf eines Systemnetzes sind \textbf{Zähler}. Diese erleichtern unter anderem die Modellierung von Lagern mit begrenzten Stückzahlen. Der Zähler, der in Abbildung~\ref{fig:zaehler} zu sehen ist, besteht aus einer Transition, die maximal 10 mal eintreten kann. Als Marke in $Platz 1$ wird eine natürliche Zahl verwendet. Bei jedem Eintritt der Transition wird diese in Form der Variable $x$ aus dem Platz entnommen und dafür die Zahl $x-1$ wieder hinzugefügt. So verringert sich die Zahl in dem Platz bei jedem Eintreten der Transition um 1. Die Transition hat außerdem als Vorbedingung, dass $x > 0$ gelten muss. Deshalb kann sie insgesamt nur 10 mal eintreten.
 	\begin{figure}[h]
 		\centering
 		\begin{tikzpicture}
