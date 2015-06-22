@@ -249,7 +249,7 @@
 		\footnote{(vgl.: \cite{tu_dresden:petrinetze})}
 		auf die in diesem Dokument nicht weiter eingegangen wird.
 
-\section{Analyse und Verifikation mit Platzinvarianten}
+\section{Analyse von Petrinetzen mit Platzinvarianten}
 	Es gibt verschiedene Möglichkeiten zur Analyse von Petrinetzen. Grundsätzlich kann man dabei zwischen der Analyse von Zustands- und Ablaufeigenschaften unterscheiden. Bei ersterem untersucht man Eigenschaften, die allgemein für alle im Systemnetz erreichbaren Markierungen gelten. Ablaufeigenschaften wiederum beschreiben Eigenschaften von einzelnen Markierungen, welche nach mehreren Schritten aus anderen Markierungen hervorgehen können.
 
 	In den folgenden Abschnitten wird exemplarisch die Bestimmung von Platzinvarianten in elementaren Systemnetzen beschrieben. Dabei geht es darum, Gleichungen zu finden, die für jede erreichbare Markierung gelten. Diese kann man dann beispielsweise für die Verifikation des Modells verwenden.
@@ -311,6 +311,7 @@
 		Die Zahlen $n_1$, $n_2$, ..., $n_t$ werden genau dann als Platzinvariante bezeichnet, wenn sich $c$ beim Eintreten einer beliebige Transition in einer beliebigen Markierung nicht ändert.
 
 	\subsection{Platzinvarianten bestimmen}
+	\label{sub:platzinvarianten_bestimmen}
 		Die Platzinvarianten aus den beiden vorherigen Beispielen (Abbildung~\ref{fig:exinvariantsimple}~und~\ref{fig:exinvariant}) kann man mit etwas Übung schon beim Betrachten des Petrinetzes erkennen. Bei größeren Petrinetzen wird das jedoch schwieriger und fehleranfälliger. Deshalb soll im folgenden Abschnitt ein Verfahren zum Bestimmen von Platzinvarianten in beliebig komplexen Petrinetzen vorgestellt werden. Als Beispiel wird dabei das Petrinetz aus Abbildung~\ref{fig:invariantdemo} dienen.
 
 		\begin{figure}[h]
