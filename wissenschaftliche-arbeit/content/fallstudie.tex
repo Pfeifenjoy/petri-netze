@@ -14,64 +14,142 @@ Somit wird die ausführung der neuen Transition "`Grundplatte bauen"' ermöglich
 \end{itemize} zusammengesetzt und für die weitere Verarbeitng, als neue Einheit zur Verfügung gestellt. \\ Sollten nun bei dieser Transition mindestens 8 Standbeine verbraucht worden sein, so wird eine neue für den Einkauf und EInlagerung von Standbeinen in Kraft gesetzt.
 \begin{landscape}
 \begin{figure}
-    \centering
-\begin{tikzpicture}
-    \node[place, label=above:Holzlager](holzlager) {$50*$\textbullet};
-    \node[transition, left= of holzlager, label=left:Holz nachkaufen](holzNachkaufen) {};
-    \node[place, below= of holzNachkaufen, label=left:Verbrauchtes Holz](verbrauchtesHolz){};
-    \node[transition, below=8em of holzlager, label=left:Flügel herstellen](fluegelHerstellen) {};
-    \node[place, label=left:Flügel, below= of fluegelHerstellen](fluegel) {};
-    \node[place, right=7em of fluegelHerstellen](1){};
-    \node[place, above=1em of 1, label=above:CNC Modus \enquote{Flügel}](cncModus){};
-    \node[place, above right=6em and 3em of cncModus, label=above:Herzustellende Flügel](herzustellendeFluegel) {};
-    \node[transition,below  right=5em of 1, label=below:CNC Modus umschalten](cncModusUmschalten){};
-    \node[place, above= of cncModusUmschalten, label={[label distance=0.1em]-30:CNC Modus Grundplatte}](cncModusGrundplatte){};
-    \node[transition, right=12em of cncModusGrundplatte, label=right:Grundplatte bauen](grundplatteBauen) {};
-    \node[transition, above left=7em and 3em of grundplatteBauen, label=below:Auftrag bearbeiten](auftragBearbeiten){};
-    \node[place, right=6em of auftragBearbeiten, label=right:Herzustellende Grundplatte](herzustellendeGrundplatte){};
-    \node[place, above=2em of auftragBearbeiten, label=right:Eingehende Aufträge](eingehendeAuftraege){};
-    \node[place, below right=7em of fluegel, label=above:Standbein Lager](standbeinLager){$10*$\textbullet};
-    \node[transition, below=5em of standbeinLager, label=left:Zusammensetzen](zusammensetzen){};
-    \node[place, below= of zusammensetzen, label=right:Fertige Windräder](fertigeWindraeder){};
-    \node[transition, right= of standbeinLager, label=right:Standbeine Nachkaufen](standbeineNachkaufen){};
-    \node[place, below= of standbeineNachkaufen, label=right:Verbrauchte Standbeine](verbrauchteStandbeine){};
-    \node[place, right=14em of standbeineNachkaufen, label=right:Grundplatten](grundplatten){};
+	\centering
+	\begin{tikzpicture}
+		\node[place, label=above:Holzlager](holzlager) {$50*$\textbullet};
+		\node[transition, left= of holzlager, label=left:Holz nachkaufen](holzNachkaufen) {};
+		\node[place, below= of holzNachkaufen, label=left:Verbrauchtes Holz](verbrauchtesHolz){};
+		\node[transition, below=8em of holzlager, label=left:Flügel herstellen](fluegelHerstellen) {};
+		\node[place, label=left:Flügel, below= of fluegelHerstellen](fluegel) {};
+		\node[place, right=7em of fluegelHerstellen](1){};
+		\node[place, above=1em of 1, label=above:CNC Modus \enquote{Flügel}](cncModus){};
+		\node[place, above right=6em and 3em of cncModus, label=above:Herzustellende Flügel](herzustellendeFluegel) {};
+		\node[transition,below  right=5em of 1, label=below:CNC Modus umschalten](cncModusUmschalten){};
+		\node[place, above= of cncModusUmschalten, label={[label distance=0em]-30:CNC Modus \enquote{Grundplatte}}, tokens=1](cncModusGrundplatte){};
+		\node[transition, right=12em of cncModusGrundplatte, label=right:Grundplatte bauen](grundplatteBauen) {};
+		\node[transition, above left=7em and 3em of grundplatteBauen, label=below:Auftrag bearbeiten](auftragBearbeiten){};
+		\node[place, right=6em of auftragBearbeiten, label=right:Herzustellende Grundplatten](herzustellendeGrundplatte){};
+		\node[place, above=2em of auftragBearbeiten, label=right:Eingehende Aufträge](eingehendeAuftraege){};
+		\node[place, below right=7em of fluegel, label=above:Standbein Lager](standbeinLager){$10*$\textbullet};
+		\node[transition, below=5em of standbeinLager, label=left:Zusammensetzen](zusammensetzen){};
+		\node[place, below= of zusammensetzen, label=right:Fertige Windräder](fertigeWindraeder){};
+		\node[transition, right= of standbeinLager, label=right:Standbeine Nachkaufen](standbeineNachkaufen){};
+		\node[place, below= of standbeineNachkaufen, label=right:Verbrauchte Standbeine](verbrauchteStandbeine){};
+		\node[place, right=14em of standbeineNachkaufen, label=right:Grundplatten](grundplatten){};
 
-    \path
-    (holzNachkaufen) edge[post, anchor=south] node[]{$40*$\textbullet} (holzlager)
-    (holzNachkaufen) edge[pre, anchor=east] node{$40*$\textbullet} (verbrauchtesHolz)
-    (holzlager) edge[post, anchor=east] node{\textbullet} (fluegelHerstellen)
-    (fluegelHerstellen) edge[post, anchor=north] node{\textbullet} (verbrauchtesHolz)
-    (fluegelHerstellen) edge[post] (fluegel)
-    (fluegel) edge[post, anchor=east] node {\textbullet\textbullet\textbullet\textbullet} (zusammensetzen)
-    (standbeinLager) edge[post, anchor=east] node{\textbullet} (zusammensetzen)
-    (zusammensetzen) edge[post, anchor=east] node{\textbullet} (fertigeWindraeder)
-    (zusammensetzen) edge[post, anchor=east] node{\textbullet} (verbrauchteStandbeine)
-    (verbrauchteStandbeine) edge[post, anchor=west] node{$8*$\textbullet} (standbeineNachkaufen)
-    (standbeineNachkaufen) edge[post, anchor=north] node{\textbullet}(standbeinLager)
-    (zusammensetzen) edge[pre, anchor=north, out=-20,in=-90] node{\textbullet} (grundplatten)
-    (grundplatteBauen) edge[post, anchor=west] node{\textbullet}(grundplatten)
-    (herzustellendeGrundplatte) edge[post, anchor=west] node{\textbullet}(grundplatteBauen)
-    (fluegelHerstellen) edge[post] node{\textbullet}(1)
-    (fluegelHerstellen) edge[pre] node{\textbullet}(cncModus)
-    (herzustellendeFluegel) edge[pre, out=210, in=80, anchor=south] node{\textbullet}(fluegelHerstellen)
-    (grundplatteBauen) edge[post, out=150, in=20, anchor=south] node{\textbullet}(verbrauchtesHolz)
-    (herzustellendeFluegel) edge[pre, anchor=south] node{\textbullet\textbullet\textbullet\textbullet} (auftragBearbeiten)
-    (holzlager) edge[post, in=150, out=20, anchor=south] node{\textbullet}(grundplatteBauen)
-    (cncModus) edge[pre, anchor=south] node{\textbullet\textbullet\textbullet\textbullet} (grundplatteBauen)
-    (1) edge[post, anchor=east, bend right] node{\textbullet\textbullet\textbullet\textbullet} (cncModusUmschalten)
-    (cncModusUmschalten) edge[post, anchor=east] node{\textbullet}(cncModusGrundplatte)
-    (cncModusGrundplatte) edge[post, anchor=south] node{\textbullet}(grundplatteBauen)
-    (auftragBearbeiten) edge[post, anchor=south] node{\textbullet}(herzustellendeGrundplatte)
-    (eingehendeAuftraege) edge[post, anchor=west] node{\textbullet}(auftragBearbeiten);
-\end{tikzpicture}
-    \caption{Modell der Anemometer Produktion}\label{Modell}
+		\path
+		(holzNachkaufen) edge[post, anchor=south] node[]{$40*$\textbullet} (holzlager)
+		(holzNachkaufen) edge[pre, anchor=east] node{$40*$\textbullet} (verbrauchtesHolz)
+		(holzlager) edge[post, anchor=east] node{\textbullet} (fluegelHerstellen)
+		(fluegelHerstellen) edge[post, anchor=north] node{\textbullet} (verbrauchtesHolz)
+		(fluegelHerstellen) edge[post] (fluegel)
+		(fluegel) edge[post, anchor=east] node {\textbullet\textbullet\textbullet\textbullet} (zusammensetzen)
+		(standbeinLager) edge[post, anchor=east] node{\textbullet} (zusammensetzen)
+		(zusammensetzen) edge[post, anchor=east] node{\textbullet} (fertigeWindraeder)
+		(zusammensetzen) edge[post, anchor=east] node{\textbullet} (verbrauchteStandbeine)
+		(verbrauchteStandbeine) edge[post, anchor=west] node{$8*$\textbullet} (standbeineNachkaufen)
+		(standbeineNachkaufen) edge[post, anchor=north] node{$8*$\textbullet}(standbeinLager)
+		(zusammensetzen) edge[pre, anchor=north, out=-20,in=-90] node{\textbullet} (grundplatten)
+		(grundplatteBauen) edge[post, anchor=west] node{\textbullet}(grundplatten)
+		(herzustellendeGrundplatte) edge[post, anchor=west] node{\textbullet}(grundplatteBauen)
+		(fluegelHerstellen) edge[post] node{\textbullet}(1)
+		(fluegelHerstellen) edge[pre] node{\textbullet}(cncModus)
+		(herzustellendeFluegel) edge[post, out=210, in=80, anchor=south] node{\textbullet}(fluegelHerstellen)
+		(grundplatteBauen) edge[post, out=150, in=20, anchor=south] node{\textbullet}(verbrauchtesHolz)
+		(herzustellendeFluegel) edge[pre, anchor=south] node{\textbullet\textbullet\textbullet\textbullet} (auftragBearbeiten)
+		(holzlager) edge[post, in=150, out=20, anchor=south] node{\textbullet}(grundplatteBauen)
+		(cncModus) edge[pre, anchor=south] node{\textbullet\textbullet\textbullet\textbullet} (grundplatteBauen)
+		(1) edge[post, anchor=east, bend right] node{\textbullet\textbullet\textbullet\textbullet} (cncModusUmschalten)
+		(cncModusUmschalten) edge[post, anchor=east] node{\textbullet}(cncModusGrundplatte)
+		(cncModusGrundplatte) edge[post, anchor=south] node{\textbullet}(grundplatteBauen)
+		(auftragBearbeiten) edge[post, anchor=south] node{\textbullet}(herzustellendeGrundplatte)
+		(eingehendeAuftraege) edge[post, anchor=west] node{\textbullet}(auftragBearbeiten);
+	\end{tikzpicture}
+	\caption{Modell der Anemometer Produktion}\label{Modell}
 \end{figure}
 \end{landscape}
 
-\section{Verifikation}
-%TODO
+\section{Analyse und Verifikation}
+Bei diesem Modell ist es wichtig, dass genau so viele Windräder hergestellt werden, wie eingehende Aufträge vorhanden sind. Dass dies tatsächlich der Fall ist, soll im Folgenden mit Hilfe der Platzinvarianten verifiziert werden.
 
-\section{Analyse}
-%TODO
+Um die Schreibweise kurz zu halten, werden die Komponenten des Petrinetzes entsprechend den Tabelln~\ref{tab:rename_transitions}~und~\ref{tab:rename_places} auf Seite~\pageref{tab:rename_transitions} umbenannt.
 
+\begin{table}[p]
+\begin{tabularx}{\textwidth}{|p{5cm}|X|}
+	\hline
+	\textbf{Verkürzte Bezeichnung} & \textbf{Transition} \\ \hline
+	$T_1$	& Auftrag bearbeiten		\\ \hline
+	$T_2$	& Flügel herstellen			\\ \hline
+	$T_3$	& Grundplatte bauen			\\ \hline
+	$T_4$	& Zusammensetzen			\\ \hline
+	$T_5$	& CNC-Modus umschalten		\\ \hline
+	$T_6$	& Standbeine nachkaufen		\\ \hline
+	$T_7$	& Holz nachkaufen			\\ \hline
+\end{tabularx}
+\caption{Umbenennung der Transitionen}
+\label{tab:rename_transitions}
+\end{table}
+\begin{table}[p]
+\begin{tabularx}{\textwidth}{|p{5cm}|X|}
+	\hline
+	\textbf{Verkürzte Bezeichnung} & \textbf{Platz} \\ \hline
+	$P_1$		& Holzlager						\\ \hline
+	$P_2$		& Verbrauchtes Holz				\\ \hline
+	$P_3$		& Flügel						\\ \hline
+	$P_4$		& 								\\ \hline
+	$P_5$		& CNC-Modus Flügel				\\ \hline
+	$P_6$		& Herzustellende Flügel			\\ \hline
+	$P_7$		& CNC-Modus Flügel				\\ \hline
+	$P_8$		& Herzustellende Grundplatten	\\ \hline
+	$P_9$		& Eingehende Aufträge			\\ \hline
+	$P_{10}$	& Standbein Lager				\\ \hline
+	$P_{11}$	& Fertige Windräder				\\ \hline
+	$P_{12}$	& Verbrauchte Standbeine		\\ \hline
+	$P_{13}$	& Grundplatten					\\ \hline
+\end{tabularx}
+\caption{Umbenennung der Plätze}
+\label{tab:rename_places}
+\end{table}
+
+Es wird weiterhin davon ausgegangen, dass zu Beginn $a$ Aufträge vorliegen. Im Platz $P_9$ befinden sich also $a$ Marken.
+
+Zunächst müssen die Platzinvarianten des Petrinetzes bestimmt werden. Dafür kann das in Abschnitt \ref{sub:platzinvarianten_bestimmen} vorgestellte Verfahren verwendet werden. Darauf soll hier nicht erneut eingegangen werden. Die Gleichungen der erhaltenen Platzinvarianzen lauten:
+
+\begin{equation}
+	|P_{13}| - \frac{1}{4}\cdot|P_5| - \frac{1}{4}\cdot|P_3| = -\frac{1}{4} \\
+\end{equation}
+\begin{equation}
+	|P_{12}| + |P_{10}| = 10 \\
+\end{equation}
+\begin{equation}
+	|P_{11}| + |P_9| + \frac{1}{4}\cdot|P_6| + \frac{1}{4}\cdot|P_3| = a	\\
+	\label{eq:platzinvariante_3}
+\end{equation}
+\begin{equation}
+	|P_8| - \frac{1}{4}\cdot|P_6| + \frac{1}{4}\cdot|P_5| = 0 \\
+\end{equation}
+\begin{equation}
+	|P_7| + \frac{1}{4}\cdot|P_5| + \frac{1}{4}\cdot|P_4| = 1 \\
+\end{equation}
+\begin{equation}
+	|P_1| + |P_2| = 50
+\end{equation}
+
+Nach dem vollständigen Bearbeiteten aller Aufträge befinden sich die hergestellten Windräder in Platz $P_{11}$. Die Plätze für die eingehenden Aufträge ($P_9$) sowie für die Teilaufträge zum Herstellen der Einzelteile ($P_6$ und $P_8$) und die Zwischenlager ($P_3$ und $P_{13}$) sind dann leer. Es gilt also:
+$$
+\begin{matrix}
+|P_{13}| = 0 \\
+|P_9| = 0 \\
+|P_8| = 0 \\
+|P_6| = 0 \\
+|P_3| = 0	
+\end{matrix}
+$$
+
+Um nachzuweisen, dass pro Auftrag ein Windrad hergestellt wird, kann Gleichung~\ref{eq:platzinvariante_3} verwendet werden. Wenn man dort für $|P_9|$, $|P_6|$ und $|P_3|$ die soeben festgelegten Werte einsetzt, erhält man die Gleichung:
+
+$$
+|P_{11}| = a
+$$
+
+In $P_{11}$ befinden sich die fertigen Windräder; a ist die Anzahl der Aufträge in der Anfangsmarkierung. Die Gleichung zeigt also, dass pro Auftrag tatsächlich genau ein Windrad hergestellt wird.
