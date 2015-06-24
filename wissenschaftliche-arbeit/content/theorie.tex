@@ -9,7 +9,7 @@
 	Diese Graphen besitzen allerdings besondere Knoten, die als Komponenten bezeichnet werden.
 	Im folgenden werden die Komponenten eines Petrinetzes beschrieben.
 
-	\paragraph{Plätze} sind die passiven Komponenten eines Petrinetzes. Sie dienen repräsentieren Zustände oder lagern Objekte.
+	\paragraph{Plätze} sind die passiven Komponenten eines Petrinetzes. Sie repräsentieren Zustände oder lagern Objekte.
 	Ein Platz wird durch einen Kreis dargestellt:
 	\begin{figure}[h]
 		\centering
@@ -23,10 +23,10 @@
 		\label{fig:platz}
 	\end{figure}
 
-	Die Objekte, die von Plätzen gelagert werden, werden allgemein als \textbf{Marken} bezeichnet. Grundsätzlich kann ein Platz beliebig viele Marken enthalten. Außerdem können in einem Modell unterschiedliche Typen von Marken verwendet werden. Eine Marke kann ein konkretes Objekt aus der realen Welt repräsentieren (Maschinen, Werkstücke, Menschen, ...). Es können jedoch auch abstrakte Marken verwendet werden, die dann meist als schwarzer Punkt dargestellt werden, wie in Abbildung~\ref{fig:platz} zu sehen. Abstrakte Marken sind sehr nützlich, um Zustände, in dem sich das System befinden kann, zu modellieren.
+	Die Objekte, die von Plätzen gelagert werden, werden allgemein als \textbf{Marken} bezeichnet. Grundsätzlich kann ein Platz beliebig viele Marken enthalten. Außerdem können in einem Modell unterschiedliche Typen von Marken verwendet werden. Eine Marke kann ein konkretes Objekt aus der realen Welt repräsentieren (Maschinen, Werkstücke, Menschen, ...). Es können jedoch auch abstrakte Marken verwendet werden, die dann meist als schwarzer Punkt dargestellt werden, wie in Abbildung~\ref{fig:platz} zu sehen. Abstrakte Marken sind sehr nützlich, um Zustände, in welchen sich das System befinden kann, zu modellieren.
 
 	\paragraph{Transitionen} sind die aktiven Komponenten eines Petrinetzes.
-    Sie beschreiben eine elementaren Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten \footnote{\cite{hu_berlin:petrinetze:plaetze}}.
+    Sie beschreiben eine elementare Aktion, die Dinge erzeugen, transportieren, verändern oder vernichten \footnote{\cite{hu_berlin:petrinetze:plaetze}}.
 	Eine Transition wird durch ein Quadrat dargestellt:
 	\begin{figure}[h]
 		\centering
@@ -39,7 +39,7 @@
 
 	Transitionen können zusätzlich noch mit einer Formel beschriftet werden. Diese ist eine Vorbedingung, die erfüllt sein muss, damit die Transition aktiviert werden kann. Wann genau eine Transition aktiviert ist und was das bedeutet, wird später in Kapitel~\ref{ssub:ablaufregeln} noch diskutiert.
 
-	\paragraph{Kanten} sind selbst keine Komponenten, sondern stellen Beziehungen zwischen Komponenten her. Kanten werden durch einen Pfeil gekennzeichnet und verbinden immer eine Transition mit einem Platz oder einen Platz mit einer Transition. Niemals jedoch verbinden sie zwei Plätze oder zwei Transitionen.
+	\paragraph{Kanten} sind selbst keine Komponenten, sondern stellen Beziehungen zwischen Komponenten her. Kanten werden durch einen Pfeil gekennzeichnet und verbinden immer eine Transition mit einem Platz oder umgekehrt. Niemals jedoch verbinden sie zwei Plätze oder zwei Transitionen miteinander.
 
 	Kanten, die von einer Transition auf eine Stelle zeigen, drücken aus, dass diese Transition Objekte erzeugt und sie in der Stelle ablegt. Kanten, die von einer Stelle auf eine Transition zeigen, drücken aus, dass diese Transition Objekte aus der Stelle entnimmt.
 
@@ -109,11 +109,11 @@
 	\end{figure}
 	\\\\
 	Als nächstes wird erklärt, wann man eine Transition als \textbf{aktiviert} bezeichnet. Anschaulich gesehen ist eine Transition $t$ in einer bestimmten Markierung aktiviert, wenn alle Plätze, aus denen $t$ Marken entnimmt, dafür genug Marken beinhalten.
-	Formal muss also jeder Platz, von dem eine Kante auf $t$ zeigt, von jedem Markentyp genausoviele oder mehr Marken beinhalten als in der Beschriftung der Kante angegeben.
+	Formal muss also jeder Platz, von dem eine Kante auf $t$ zeigt, von jedem Markentyp genauso viele oder mehr Marken beinhalten als in der Beschriftung der Kante angegeben.
 
-	Im Petrinetz aus Abbildung~\ref{fig:markierung1} entnimmt die Transition $Produkt herstellen$ eine dreieckige Marke aus dem Platz $Lagerbestand$ und eine schwarze Marke aus $Auftrag liegt vor$. Beide Plätze enthalten die geforderten Marken. Also ist die Transition aktiviert.
+	Im Petrinetz aus Abbildung~\ref{fig:markierung1} entnimmt die Transition $Produkt\ herstellen$ eine dreieckige Marke aus dem Platz $Lagerbestand$ und eine schwarze Marke aus $Auftrag\ liegt\ vor$. Beide Plätze enthalten die geforderten Marken. Also ist die Transition aktiviert.
 
-	In Abbildung~\ref{fig:markierung2} ist das selbe Petrinetz in einer anderen Markierung dargestellt. Hier enthält $Auftrag liegt vor$ genug schwarze Marken. Aus dem Platz $Lagerbestand$ entnimmt die Transition jedoch eine dreieckige Marke, aber in dem Platz sind nur Rautenförmige Marken enthalten. Daher ist die Transition in Markierung 2 nicht aktiviert.
+	In Abbildung~\ref{fig:markierung2} ist das selbe Petrinetz in einer anderen Markierung dargestellt. Hier enthält $Auftrag\ liegt\ vor$ genug schwarze Marken. Aus dem Platz $Lagerbestand$ entnimmt die Transition jedoch eine dreieckige Marke, aber in dem Platz sind nur Rautenförmige Marken enthalten. Daher ist die Transition in Markierung 2 nicht aktiviert.
 
 	Diese Vorgehensweise funktioniert für Kanten, die mit konstanten Termen beschriftet sind. Wenn im Term einer Kante Variablen vorkommen, muss zunächst eine Belegung der Variablen mit echten Werten gefunden werden, für die diese Bedingung zutrifft. Außerdem muss die Formel in der Transition für die Variablenbelegung wahr sein. Wenn eine passende Variablenbelegung existiert, dann ist die Transition in der entsprechenden Markierung unter dieser Variablenbelegung aktiviert. Andernfalls ist die Transition nicht aktiviert.
 
@@ -148,15 +148,15 @@
 		\item $X$ = \tikz{\node[fill]{};}	\hspace{1cm} $Y$ = \tikz{\node[token]{};} 
 		\item $X$ = \tikz{\node[token]{};}	\hspace{1cm} $Y$ = \tikz{\node[token]{};}
 	\end{itemize}
-	Eine Variablenbelegung mit $Y$ = \tikz{\node[fill]{};}, bei der die Transition aktiviert ist, kann es in der gezeigten Markierung nicht geben, denn in $Platz 3$ ist ausschließlich eine kreisförmige Marke vorhanden.
+	Eine Variablenbelegung mit $Y$ = \tikz{\node[fill]{};}, bei der die Transition aktiviert ist, kann es in der gezeigten Markierung nicht geben, denn in $Platz\ 3$ ist ausschließlich eine kreisförmige Marke vorhanden.
 	
 	Wenn eine Transition aktiviert ist, dann kann sie \textbf{eintreten}. Beim Ablauf eines Petrinetzes kann in einer Markierung immer nur eine Transition eintreten. Welche der aktivierten Transitionen eintritt, ist nicht deterministisch bestimmt. Durch das Eintreten einer Transition wird eine neue Markierung für das Petrinetz erzeugt. Dabei werden aus allen Plätzen, von denen eine Kante auf die Transition zeigen, die in der Kantenbeschriftung angegebenen Marken entfernt. Außerdem werden zu allen Plätzen, auf die eine Kante zeigt, die bei der Transition beginnt, die in der Kantenbeschriftung angegebenen Marken hinzugefügt.
 
 	Wenn die Kantenbeschriftungen Variablen enthalten, müssen zunächst die Werte aus der Variablenbelegung, für die die Transition aktiv ist, eingesetzt werden. 
 
-	Wenn die Transition $Produkt herstellen$ in Abbildung~\ref{fig:markierung1} eintritt, dann wird aus dem Platz $Lagerbestand$ ein Marke \tikz{\node[draw,regular polygon,regular polygon sides=3,inner sep=1pt]{};} entfernt und aus dem Platz $Auftrag liegt vor$ wird eine Marke \tikz{\node[token]{};} entfernt. Außerdem wird zum Platz $Endprodukt$ eine Marke \tikz{\node[draw]{};} hinzugefügt. So entsteht die Markierung, die in Abbildung~\ref{fig:markierung2} zu sehen ist.
+	Wenn die Transition $Produkt\ herstellen$ in Abbildung~\ref{fig:markierung1} eintritt, dann wird aus dem Platz $Lagerbestand$ ein Marke \tikz{\node[draw,regular polygon,regular polygon sides=3,inner sep=1pt]{};} entfernt und aus dem Platz $Auftrag\ liegt\ vor$ wird eine Marke \tikz{\node[token]{};} entfernt. Außerdem wird zum Platz $Endprodukt$ eine Marke \tikz{\node[draw]{};} hinzugefügt. So entsteht die Markierung, die in Abbildung~\ref{fig:markierung2} zu sehen ist.
 
-	Wie oben bereits erläutert, ist die Transition aus Abbildung~\ref{fig:varkanten1} für die Variablenbelegung $X$ = \tikz{\node[fill]{};}, $Y$ = \tikz{\node[token]{};} aktiviert. Wenn die Transition unter dieser Variablenbelegung eintritt, wird aus $Platz 3$ eine Marke \tikz{\node[token]{};} und aus $Platz 1$ eine Marke \tikz{\node[fill]{};} entfernt. Aus $Platz 2$ wird zunächst ebenfalls eine Marke \tikz{\node[fill]{};} entfernt und die Marken \tikz{\node[fill]{};} und \tikz{\node[token]{};} wieder hinzugefügt. Außerdem wird zu $Platz 4$ eine Marke \tikz{\node[fill]{};} hinzugefügt.
+	Wie oben bereits erläutert, ist die Transition aus Abbildung~\ref{fig:varkanten1} für die Variablenbelegung $X$ = \tikz{\node[fill]{};}, $Y$ = \tikz{\node[token]{};} aktiviert. Wenn die Transition unter dieser Variablenbelegung eintritt, wird aus $Platz\ 3$ eine Marke \tikz{\node[token]{};} und aus $Platz\ 1$ eine Marke \tikz{\node[fill]{};} entfernt. Aus $Platz\ 2$ wird zunächst ebenfalls eine Marke \tikz{\node[fill]{};} entfernt und die Marken \tikz{\node[fill]{};} und \tikz{\node[token]{};} wieder hinzugefügt. Außerdem wird zu $Platz\ 4$ eine Marke \tikz{\node[fill]{};} hinzugefügt.
 
 	\begin{figure}[h]
 		\centering
@@ -185,7 +185,7 @@
 		\label{fig:varkanten2}
 	\end{figure}
 
-	Ein weiteres Beispiel für den Ablauf eines Systemnetzes sind \textbf{Zähler}. Diese erleichtern unter anderem die Modellierung von Lagern mit begrenzten Stückzahlen. Der Zähler, der in Abbildung~\ref{fig:zaehler} zu sehen ist, besteht aus einer Transition, die maximal 10 mal eintreten kann. Als Marke in $Platz 1$ wird eine natürliche Zahl verwendet. Bei jedem Eintritt der Transition wird diese in Form der Variable $x$ aus dem Platz entnommen und dafür die Zahl $x-1$ wieder hinzugefügt. So verringert sich die Zahl in dem Platz bei jedem Eintreten der Transition um 1. Die Transition hat außerdem als Vorbedingung, dass $x > 0$ gelten muss. Deshalb kann sie insgesamt nur 10 mal eintreten.
+	Ein weiteres Beispiel für den Ablauf eines Systemnetzes sind \textbf{Zähler}. Diese erleichtern unter anderem die Modellierung von Lagern mit begrenzten Stückzahlen. Der Zähler, der in Abbildung~\ref{fig:zaehler} zu sehen ist, besteht aus einer Transition, die maximal 10 mal eintreten kann. Als Marke in $Platz\ 1$ wird eine natürliche Zahl verwendet. Bei jedem Eintritt der Transition wird diese in Form der Variable $x$ aus dem Platz entnommen und dafür die Zahl $x-1$ wieder hinzugefügt. So verringert sich die Zahl in dem Platz bei jedem Eintreten der Transition um 1. Die Transition hat außerdem als Vorbedingung, dass $x > 0$ gelten muss. Deshalb kann sie insgesamt nur 10 mal eintreten.
 	\begin{figure}[h]
 		\centering
 		\begin{tikzpicture}
@@ -204,14 +204,14 @@
 \section{Weitere Ausdrucksmöglichkeiten}
 	% @:    so sagen?
 	\paragraph{Schnittstellen} ermöglichen auf Aktivitäten aus der Umgebung einzugehen.
-	Mit Hilfe der bisherig vorgestellten Bestandteile lassen sich bereits geschlossene Systeme modellieren.
+	Mit Hilfe der bisher vorgestellten Bestandteile lassen sich bereits geschlossene Systeme modellieren.
 	Sollen allerdings Interaktionen eines Geschäftsprozesses mit z.B. einem Kunden modelliert werden, benötigt man Schnittstellen.
 	Diese werden durch eine Transition dargestellt.
 
 	\paragraph{Kalte Transitionen} dienen der Modellierung von Transitionen, bei denen nicht klar ist ob sie eintreffen.
 	Wird z.B. ein Prozess von einem Kunden durch dessen Bezahlung ausgelöst, ist im Vorhinein nicht klar ob dieses Ereignis jemals eintreffen wird.
 	Ist das Gegenteil der Fall wird die Transition als \enquote{warm} bezeichnet.
-	Kalte Transitionen werden durch eine Transition dargestellt, die ein $\epsilon$ beinhalten dargestellt.
+	Kalte Transitionen werden durch ein $\epsilon$ in der Beschriftung kenntlich gemacht.
 	\begin{center}
 		\begin{tikzpicture}
 			\node[transition]{$\epsilon$};
@@ -230,14 +230,14 @@
 		Häufig werden Petri Netze dazu verwendet darzustellen, wo ein Kontrollfluss aktuell steht. \footnote{(vgl. \cite[Seite 39]{hu_berlin:petrinetze})}
 		Will man einen Prozess genauer analysieren geht dies am einfachsten in dem man den Prozess abstrakt darstellt.
 		Dafür bieten sich elementare Petrinetze an, die auch als elementare Systemnetze bezeichnet werden.\\
-		Bei einem elementaren Petrinetz werden die Marken auf den Kanten weggelassen. Außerdem gibt es nur eine Form von Marken, die in der Regel durch einen schwarzen Punkt \textbullet visualisiert wird.
+		Bei einem elementaren Petrinetz werden die Marken auf den Kanten weggelassen. Außerdem gibt es nur eine Form von Marken, die in der Regel durch einen schwarzen Punkt \textbullet \ visualisiert wird.
 		Dabei beschränkt sich ein elementares Petrinetz auf Transitionen, Plätze und Marken.
 		Aufgrund der abstrakten Modellierung und geringen Anzahl an Komponenten gehören elementare Petrinetze zu den low-level Petrinetzen.
 
 	\subsection{Gefärbte Petrinetze}
-		Gefärbte Petrinetze werden hauptsächlich zur Modellierung komplexer Systeme verwenden, da Sie zu der Gruppe der high-level Petrinetzen gehören.
-		Im Unterschied zu anderen Petrinetzen sind die gefärbten Petrinetze wesentlich übersichtlicher, können allerdings jeder Zeit wieder in ein low-level Petrinetz zurückgeführt werden.
-		Dabei bieten die gefärbten Petrinetze weitere Funktionalitäten wie z.B.:
+		Gefärbte Petrinetze werden hauptsächlich zur Modellierung komplexer Systeme verwendet, da Sie zu der Gruppe der high-level Petrinetze gehören.
+		Im Unterschied zu anderen Petrinetzen sind die gefärbten Petrinetze wesentlich übersichtlicher, können allerdings jederzeit wieder in ein low-level Petrinetz zurückgeführt werden.
+		Dabei bieten die gefärbten Petrinetze weitere Funktionalitäten\footnote{(vgl.: \cite{tu_dresden:petrinetze})} wie z.B.:
 		\begin{itemize}
 		    \item Typen
 		    \item Knotenfunktionen
@@ -246,9 +246,7 @@
 		    \item Kantenausdrucksfunktionen
 		    \item Initialisierungsfunktionen
 		\end{itemize}
-		\footnote{(vgl.: \cite{tu_dresden:petrinetze})}
-		auf die in diesem Dokument nicht weiter eingegangen wird.
-
+		
 \section{Analyse von Petrinetzen mit Platzinvarianten}
 	Es gibt verschiedene Möglichkeiten zur Analyse von Petrinetzen. Grundsätzlich kann man dabei zwischen der Analyse von Zustands- und Ablaufeigenschaften unterscheiden. Bei ersterem untersucht man Eigenschaften, die allgemein für alle im Systemnetz erreichbaren Markierungen gelten. Ablaufeigenschaften wiederum beschreiben Eigenschaften von einzelnen Markierungen, welche nach mehreren Schritten aus anderen Markierungen hervorgehen können.
 
@@ -296,7 +294,7 @@
 			\label{fig:exinvariant}
 		\end{figure}
 		
-		Eine Marke in $Verpackte Produkte$ ist nämlich genauso viel wert, wie eine Marke in $Produkte$ zusammen mit einer Marke aus $Verpackungen$. Um auszudrücken, dass eine Marke aus $Verpackte Produkte$ zwei Marken aus den anderen Plätzen entspricht, kann man die Anzahl der Marken in $Verpackte Produkte$ mit zwei multiplizieren. Dann gillt immer die Gleichung:
+		Eine Marke in $Verpackte Produkte$ ist nämlich genauso viel wert, wie eine Marke in $Produkte$ zusammen mit einer Marke aus $Verpackungen$. Um auszudrücken, dass eine Marke aus $Verpackte Produkte$ zwei Marken aus den anderen Plätzen entspricht, kann man die Anzahl der Marken in $Verpackte Produkte$ mit zwei multiplizieren. Dann gilt immer die Gleichung:
 
 		$$2\cdot|Verpackte Produkte| + |Produkte| + |Verpackungen| = 11$$
 
@@ -373,7 +371,7 @@
 		$$
 		\sum_{s=1}^k n_s \cdot d(t, P_s) = n_1 \cdot d(t, P_1) + n_2 \cdot d(t, P_2) + .... + n_k \cdot d(t, P_k) = 0
 		$$
-		So entsteht ein lineares Gleichungssystem, das zum Beispiel mit dem Gaußschesn Eliminationsverfahren gelöst werden kann. Beim Petrinetz aus Abbildung~\ref{fig:invariantdemo} ergeben sich die folgenden Gleichungen:
+		So entsteht ein lineares Gleichungssystem, das zum Beispiel mit dem Gaußschen Eliminationsverfahren gelöst werden kann. Beim Petrinetz aus Abbildung~\ref{fig:invariantdemo} ergeben sich die folgenden Gleichungen:
 		$$
 		\arraycolsep=1.4pt
 		\begin{vmatrix}
@@ -411,4 +409,4 @@
 		$$
 		Diese Gleichungen gelten in allen erreichbaren Markierungen.
 
-		Das gezeigte Verfahren ist universell einsetzbar und ermöglicht es, alle Platzinvarianten eines gegebenen Systemnetzes zu finden. Da es in der Hauptsache auf dem Lösen eines Linearen Gleichungssystems beruht, sollte es außerdem möglich sein, das Verfahren zu automatisieren. Wie man anhand der Gleichung der Platzinvariante 4 sieht, gehen die Ergebnisse der Analyse über die in Abschnitt~\ref{sub:platzinvarianten_einf} vorgestellte Analogie zu Material- oder Informationsflüssen hinaus, denn durch die negativen Koeffizienten lässt sich diese hier nicht anwenden. Welche Möglichkeiten die Gleichungen zum weiteren Vorgehen bieten, wird in Kapitel~\ref{chap:fallstudie}~-~\nameref{chap:fallstudie} besprochen. 
+		Das gezeigte Verfahren ist universell einsetzbar und ermöglicht es, alle Platzinvarianten eines gegebenen Systemnetzes zu finden. Da es in der Hauptsache auf dem Lösen eines linearen Gleichungssystems beruht, sollte es außerdem möglich sein, das Verfahren zu automatisieren. Wie man anhand der Gleichung der Platzinvariante 4 sieht, gehen die Ergebnisse der Analyse über die in Abschnitt~\ref{sub:platzinvarianten_einf} vorgestellte Analogie zu Material- oder Informationsflüssen hinaus, denn durch die negativen Koeffizienten lässt sich diese hier nicht anwenden. Welche Möglichkeiten die Gleichungen zum weiteren Vorgehen bieten, wird in Kapitel~\ref{chap:fallstudie}~-~\nameref{chap:fallstudie} besprochen. 
